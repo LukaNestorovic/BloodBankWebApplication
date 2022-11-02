@@ -1,7 +1,12 @@
 package com.isa.centarzatransfuzijukrvi.model
 
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
 data class RegisteredUser(
-    val id: Int,
+    @Id
+    val id: Int?,
     val name: String,
     val surname: String,
     val email: String,
@@ -15,4 +20,5 @@ data class RegisteredUser(
     val occupation: String,
     val information: String
 ) {
+    constructor() : this(null,"","","","","","","","","","","","")
 }

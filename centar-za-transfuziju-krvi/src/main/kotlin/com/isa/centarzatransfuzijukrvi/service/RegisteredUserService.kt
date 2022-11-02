@@ -1,4 +1,4 @@
-/*package com.isa.centarzatransfuzijukrvi.service
+package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
@@ -16,4 +16,4 @@ class RegisteredUserService(val registeredUserRepository: RegisteredUserReposito
         }
         return registeredUserRepository.save(registeredUser)
     }
-}*/
+}
