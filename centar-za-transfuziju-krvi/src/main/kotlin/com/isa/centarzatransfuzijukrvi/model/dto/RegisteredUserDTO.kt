@@ -1,6 +1,6 @@
-package com.isa.centarzatransfuzijukrvi.model
+package com.isa.centarzatransfuzijukrvi.model.dto
 
-data class RegisteredUser(
+data class RegisteredUserDTO(
     val id: Int,
     val name: String,
     val surname: String,
@@ -13,6 +13,6 @@ data class RegisteredUser(
     val jmbg: String,
     val gender: String,
     val occupation: String,
-    val information: String
+    val information: String,
 ) {
 }
