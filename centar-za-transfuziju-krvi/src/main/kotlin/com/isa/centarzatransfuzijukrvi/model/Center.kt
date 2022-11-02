@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-open class Center(
+data class Center(
     @Id
     @GeneratedValue
     @Column
@@ -19,9 +19,8 @@ open class Center(
     val description: String,
     @Column
     val rating: Double) {
-    constructor() : this() {
+    constructor() : this(0,"","","",0.0) {
 
     }
-
 
 }
