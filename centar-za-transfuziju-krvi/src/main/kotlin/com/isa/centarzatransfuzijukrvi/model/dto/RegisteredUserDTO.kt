@@ -1,7 +1,7 @@
 package com.isa.centarzatransfuzijukrvi.model.dto
 
 data class RegisteredUserDTO(
-    val id: Int,
+    val id: Int?,
     val name: String,
     val surname: String,
     val email: String,

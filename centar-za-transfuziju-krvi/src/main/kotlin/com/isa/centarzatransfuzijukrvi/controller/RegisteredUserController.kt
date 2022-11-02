@@ -1,8 +1,9 @@
-/*package com.isa.centarzatransfuzijukrvi.controller
+package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDTO
 import com.isa.centarzatransfuzijukrvi.service.RegisteredUserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -28,4 +29,4 @@ class RegisteredUserController(val registeredUserService: RegisteredUserService)
 
         return ResponseEntity(newRegisteredUserDTO, HttpStatus.CREATED)
     }
-}*/
+}
