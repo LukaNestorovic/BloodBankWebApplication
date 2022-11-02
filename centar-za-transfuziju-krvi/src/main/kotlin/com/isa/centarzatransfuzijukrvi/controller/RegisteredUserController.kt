@@ -1,4 +1,4 @@
-package com.isa.centarzatransfuzijukrvi.controller
+/*package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDTO
@@ -28,4 +28,4 @@ class RegisteredUserController(val registeredUserService: RegisteredUserService)
 
         return ResponseEntity(newRegisteredUserDTO, HttpStatus.CREATED)
     }
-}
+}*/
