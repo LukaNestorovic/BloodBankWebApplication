@@ -9,4 +9,7 @@ class StaffService(val staffRepository: StaffRepository) {
     fun create(staff: Staff): Staff{
         return staffRepository.save(staff)
     }
+    fun read(id: Int): Staff{
+        return staffRepository.findById(id).get()
+    }
 }
