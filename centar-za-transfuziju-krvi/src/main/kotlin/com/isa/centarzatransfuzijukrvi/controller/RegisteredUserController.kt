@@ -6,18 +6,18 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/registration")
 class RegisteredUserController(val registeredUserService: RegisteredUserService) {
 
-    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun createRegisteredUser(registeredUser: RegisteredUser) : ResponseEntity<RegisteredUser>{
+    @PostMapping(path = ["/registration"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun createRegisteredUser(@RequestBody registeredUser: RegisteredUser) : ResponseEntity<RegisteredUser>{
         println("ime:" + registeredUser.name)
         val registeredUser: RegisteredUser = RegisteredUser(registeredUser.id, registeredUser.name, registeredUser.surname, registeredUser.email,
-            registeredUser.password, registeredUser.adress, registeredUser.city, registeredUser.country, registeredUser.phone, registeredUser.jmbg,
+            registeredUser.password, registeredUser.address, registeredUser.city, registeredUser.country, registeredUser.phone, registeredUser.jmbg,
             registeredUser.gender, registeredUser.occupation, registeredUser.information)
 
         val newRegisteredUser: RegisteredUser = registeredUserService.create(registeredUser)

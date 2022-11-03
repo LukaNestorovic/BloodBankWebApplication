@@ -9,29 +9,29 @@ data class RegisteredUser(
     @Column
     val id: Int?,
     @Column
-    val name: String,
+    val name: String?,
     @Column
-    val surname: String,
+    val surname: String?,
     @Column
-    val email: String,
+    val email: String?,
     @Column
-    val password: String,
+    val password: String?,
     @Column
-    val adress: String,
+    val address: String?,
     @Column
-    val city: String,
+    val city: String?,
     @Column
-    val country: String,
+    val country: String?,
     @Column
-    val phone: String,
+    val phone: String?,
     @Column
-    val jmbg: String,
+    val jmbg: String?,
     @Column
-    val gender: String,
+    val gender: String?,
     @Column
-    val occupation: String,
+    val occupation: String?,
     @Column
-    val information: String
+    val information: String?
 ) {
-    constructor() : this(null,"","","","","","","","","","","","")
+    constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null)
 }
