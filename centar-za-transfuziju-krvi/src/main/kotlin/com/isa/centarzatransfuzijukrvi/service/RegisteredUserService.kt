@@ -14,9 +14,6 @@ class RegisteredUserService(val registeredUserRepository: RegisteredUserReposito
     }
 
     fun create(registeredUser: RegisteredUser): RegisteredUser {
-        if (registeredUser.id != null) {
-            throw Exception("Id must be null")
-        }
         return registeredUserRepository.save(registeredUser)
     }
 }
