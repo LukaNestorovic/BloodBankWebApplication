@@ -6,10 +6,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class StaffService(val staffRepository: StaffRepository) {
-    fun create(staff: Staff): Staff{
-        return staffRepository.save(staff)
-    }
-    fun read(id: Int): Staff{
-        return staffRepository.findById(id).get()
-    }
+    fun create(staff: Staff): Staff= staffRepository.save(staff)
+    fun read(id: Int): Staff = staffRepository.findById(id).get()
 }
