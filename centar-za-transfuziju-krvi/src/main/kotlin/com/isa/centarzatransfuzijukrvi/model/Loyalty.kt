@@ -1,5 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -12,6 +13,7 @@ data class Loyalty(
     val points: Int = 0,
     @Column
     val category: String = "Regular",
+    @JsonIgnore
     @OneToOne(mappedBy = "card")
-    val user: RegisteredUser?=null,
+    var user: RegisteredUser?=null,
 )

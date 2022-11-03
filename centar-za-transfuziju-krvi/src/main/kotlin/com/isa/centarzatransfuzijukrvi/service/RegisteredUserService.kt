@@ -4,18 +4,19 @@ import com.isa.centarzatransfuzijukrvi.model.Loyalty
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.repository.LoyaltyRepository
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class RegisteredUserService(val registeredUserRepository: RegisteredUserRepository,
-                            val loyaltyRepository: LoyaltyRepository) {
+class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredUserRepository,
+                            @Autowired val loyaltyRepository: LoyaltyRepository) {
 
     fun findOne(id: Int): RegisteredUser {
         return registeredUserRepository.getOne(id)
     }
 
     fun create(registeredUser: RegisteredUser): RegisteredUser {
-        registeredUser.card = loyaltyRepository.save(Loyalty())
+        registeredUser.card = Loyalty(user = registeredUser)
         return registeredUserRepository.save(registeredUser)
     }
 }
