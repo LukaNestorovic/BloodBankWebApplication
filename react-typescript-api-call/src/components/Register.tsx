@@ -101,14 +101,14 @@ export default function Register() {
             <Stack direction="column" spacing={1}>
                 <h1 style={{alignSelf:'center'}}>Register</h1>
                 <TextField id="outlined-basic" label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.email} onChange={(e) => handleChange2(e)} type="text"/>
-                <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
-                    <InputLabel htmlFor="filled-adornment-password" >Password</InputLabel>
-                    <FilledInput
-                        id="filled-adornment-password"
-                        type={values.showPassword ? 'text' : 'password'}
-                        defaultValue={values.password}
-                        onChange={e => {handleChange('password'); handleChange2(e)}}
-                        endAdornment={
+                            <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
+                            <InputLabel htmlFor="filled-adornment-password" >Password</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-password"
+                                type={values.showPassword ? 'text' : 'password'}
+                                defaultValue={values.password}
+                                onChange={e => {handleChange('password'); handleChange2(e)}}
+                                endAdornment={
                             <InputAdornment position="end" >
                                 <IconButton
                                     aria-label="toggle password visibility"
