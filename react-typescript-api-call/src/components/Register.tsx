@@ -100,13 +100,13 @@ export default function Register() {
         <Container>
             <Stack direction="column" spacing={1}>
                 <h1 style={{alignSelf:'center'}}>Register</h1>
-                <TextField id="outlined-basic" label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.email} onChange={(e) => handleChange2(e)} type="text"/>
+                <TextField id="outlined-basic" label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="email" onChange={(e) => handleChange2(e)} type="text"/>
                             <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
                             <InputLabel htmlFor="filled-adornment-password" >Password</InputLabel>
                             <FilledInput
                                 id="filled-adornment-password"
                                 type={values.showPassword ? 'text' : 'password'}
-                                defaultValue={values.password}
+                                name="password"
                                 onChange={e => {handleChange('password'); handleChange2(e)}}
                                 endAdornment={
                             <InputAdornment position="end" >
@@ -127,7 +127,7 @@ export default function Register() {
                     <FilledInput
                         id="filled-adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
-                        defaultValue={user.repeatPassword}
+                        name="password"
                         onChange={e => {handleChange('password'); handleChange2(e)}}
                         endAdornment={
                             <InputAdornment position="end" >
@@ -143,13 +143,13 @@ export default function Register() {
                         }
                     />
                 </FormControl>
-                <TextField id="outlined-basic" label="Name" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.name} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="Surname" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.surname} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="Address" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.address} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="City" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.city} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="Country" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.country} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="Phone" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.phone} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="JMBG" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.jmbg} onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Name" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="name" onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Surname" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="surname" onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Address" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="address" onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="City" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="city" onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Country" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="country" onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Phone" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="phone" onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="JMBG" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="jmbg" onChange={(e) => handleChange2(e)}/>
                 <FormControl style={{width:'60ch', alignSelf:'center'}}>
                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                 <Select
@@ -163,8 +163,8 @@ export default function Register() {
                     <MenuItem value={"female"}>Female</MenuItem>
                 </Select>
                 </FormControl>
-                <TextField id="outlined-basic" label="Occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.occupation} onChange={(e) => handleChange2(e)}/>
-                <TextField id="outlined-basic" label="Information about occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} defaultValue={user.information} onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="occupation"  onChange={(e) => handleChange2(e)}/>
+                <TextField id="outlined-basic" label="Information about occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="information" onChange={(e) => handleChange2(e)}/>
                 <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={saveUser}>Register</Button>
             </Stack>
         </Container>
