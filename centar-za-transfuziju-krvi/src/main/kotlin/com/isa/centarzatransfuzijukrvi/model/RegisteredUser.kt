@@ -1,6 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
-import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserProfileUpdateDto
+import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDto
 import javax.persistence.*
 
 @Entity
@@ -38,7 +38,7 @@ data class RegisteredUser(
     var card: Loyalty?,
 ) {
     constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null, null)
-    fun updateUserFields(newData: RegisteredUserProfileUpdateDto){
+    fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
         if(newData.surname!=null) this.surname = newData.surname
         if(newData.password!=null) this.password = newData.password

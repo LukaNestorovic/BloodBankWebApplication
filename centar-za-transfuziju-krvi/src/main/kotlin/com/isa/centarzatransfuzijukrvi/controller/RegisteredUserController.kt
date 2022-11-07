@@ -1,13 +1,14 @@
 package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
-import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserProfileUpdateDto
+import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDto
 import com.isa.centarzatransfuzijukrvi.service.RegisteredUserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
 
 @RestController
 @RequestMapping(path = ["api"])
@@ -20,8 +21,14 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
         val newRegisteredUser: RegisteredUser = registeredUserService.create(registeredUser)
         return ResponseEntity(newRegisteredUser, HttpStatus.CREATED)
     }
-    @PutMapping(path = ["/update"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun updateRegisteredUser(@RequestBody newUserInfo: RegisteredUserProfileUpdateDto) : ResponseEntity<RegisteredUser> =
+    @PutMapping(path = ["/profile"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun updateRegisteredUser(@RequestBody newUserInfo: RegisteredUserDto) : ResponseEntity<RegisteredUser> =
         ResponseEntity(registeredUserService.update(newUserInfo),HttpStatus.ACCEPTED)
 
+    @GetMapping(path = ["/profile/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun findRegisteredUser(@PathVariable id: Int) : ResponseEntity<RegisteredUserDto> {
+        val user = registeredUserService.findOne(id)
+        val userDTO = RegisteredUserDto(user)
+        return ResponseEntity(userDTO,HttpStatus.ACCEPTED)
+    }
 }
