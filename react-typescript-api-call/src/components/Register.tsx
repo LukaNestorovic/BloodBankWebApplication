@@ -154,6 +154,7 @@ export default function Register() {
                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
+                    name="gender"
                     id="demo-simple-select"
                     value={gender}
                     label="Gender"

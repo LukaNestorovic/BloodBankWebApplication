@@ -14,7 +14,6 @@ class RegisteredUserController(val registeredUserService: RegisteredUserService)
 
     @PostMapping(path = ["/register"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createRegisteredUser(@RequestBody registeredUser: RegisteredUser) : ResponseEntity<RegisteredUser>{
-        println("name:" + registeredUser.name)
         val registeredUser: RegisteredUser = RegisteredUser(registeredUser.id, registeredUser.name, registeredUser.surname, registeredUser.email,
             registeredUser.password, registeredUser.address, registeredUser.city, registeredUser.country, registeredUser.phone, registeredUser.jmbg,
             registeredUser.gender, registeredUser.occupation, registeredUser.information)
