@@ -83,7 +83,7 @@ export default function Register() {
 
     const saveUser = (e: any) => {
         e.preventDefault();
-        UserService.saveEmployee(user)
+        UserService.saveUser(user)
             .then((response) => {
                 console.log(response);
                 //navigate("/register");
