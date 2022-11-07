@@ -1,5 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
+import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserProfileUpdateDto
 import javax.persistence.*
 
 @Entity
@@ -9,32 +10,45 @@ data class RegisteredUser(
     @Column
     val id: Int?,
     @Column
-    val name: String?,
+    var name: String?,
     @Column
-    val surname: String?,
+    var surname: String?,
     @Column
     val email: String?,
     @Column
-    val password: String?,
+    var password: String?,
     @Column
-    val address: String?,
+    var address: String?,
     @Column
-    val city: String?,
+    var city: String?,
     @Column
-    val country: String?,
+    var country: String?,
     @Column
-    val phone: String?,
+    var phone: String?,
     @Column
     val jmbg: String?,
     @Column
-    val gender: String?,
+    var gender: String?,
     @Column
-    val occupation: String?,
+    var occupation: String?,
     @Column
-    val information: String?,
+    var information: String?,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "card", referencedColumnName = "id")
     var card: Loyalty?,
 ) {
     constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null, null)
+    fun updateUserFields(newData: RegisteredUserProfileUpdateDto){
+        if(newData.name!=null) this.name = newData.name
+        if(newData.surname!=null) this.surname = newData.surname
+        if(newData.password!=null) this.password = newData.password
+        if(newData.address!=null) this.address = newData.address
+        if(newData.city!=null) this.city = newData.city
+        if(newData.country!=null) this.country = newData.country
+        if(newData.phone!=null) this.phone = newData.phone
+        if(newData.gender!=null) this.gender = newData.gender
+        if(newData.occupation!=null) this.occupation = newData.occupation
+        if(newData.information!=null) this.information = newData.information
+
+    }
 }
