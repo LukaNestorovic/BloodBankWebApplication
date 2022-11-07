@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin(origins=["*"])
 class RegisteredUserController(val registeredUserService: RegisteredUserService) {
 
+
     @PostMapping(path = ["/register"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createRegisteredUser(@RequestBody registeredUser: RegisteredUser) : ResponseEntity<RegisteredUser>{
         val registeredUser: RegisteredUser = RegisteredUser(registeredUser.id, registeredUser.name, registeredUser.surname, registeredUser.email,
