@@ -1,12 +1,21 @@
 import React from 'react';
-import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+import LogIn from "./components/LogIn";
+import Register from "./components/Register"
+import Navbar from "./components/Navbar"
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-        <h1>Hello world</h1>
-    </div>
+      <>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<LogIn />} />
+            <Route path="/" element={<LogIn />}></Route>
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </>
   );
 }
 
