@@ -7,7 +7,7 @@ class UserService {
         return axios.post(EMPLOYEE_API_BASE_URL, user);
     }
     getUser(user: any){
-        return axios.get("/update",user)
+        return axios.get("/profile/${id}",user)
     }
 }
 

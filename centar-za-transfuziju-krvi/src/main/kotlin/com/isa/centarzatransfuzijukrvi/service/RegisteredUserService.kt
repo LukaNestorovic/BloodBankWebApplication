@@ -26,4 +26,6 @@ class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredU
         user.updateUserFields(newUserInfo)
         return registeredUserRepository.save(user)
     }
+
+    fun findByEmail(email: String) : RegisteredUser = registeredUserRepository.findOneByEmail(email)
 }
