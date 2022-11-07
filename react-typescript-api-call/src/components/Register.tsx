@@ -70,12 +70,12 @@ export default function Register() {
         });
     };
 
-    const handleChange2 = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const handleChange2 = (e: any) => {
         const value = e.target.value;
         setUser({ ...user, [e.target.name]: value });
     };
 
-    const handleChange3 = (e: SelectChangeEvent<String>) => {
+    const handleChange3 = (e: any) => {
         const value = e.target.value;
         setUser({ ...user, [e.target.name]: value });
     };
@@ -86,7 +86,7 @@ export default function Register() {
         UserService.saveEmployee(user)
             .then((response) => {
                 console.log(response);
-                navigate("http://localhost:3000");
+                //navigate("/register");
             })
             .catch((error) => {
                 console.log(error);
@@ -157,7 +157,7 @@ export default function Register() {
                     id="demo-simple-select"
                     value={gender}
                     label="Gender"
-                    onChange={e => {handleChange1(e); handleChange3(e)}}
+                    onChange={e => {handleChange1(e); handleChange2(e)}}
                 >
                     <MenuItem value={"male"}>Male</MenuItem>
                     <MenuItem value={"female"}>Female</MenuItem>
