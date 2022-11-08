@@ -35,6 +35,8 @@ data class RegisteredUser(
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "card", referencedColumnName = "id")
     var card: Loyalty?,
+    @Column
+    val bloodGroup: String?
 ) {
-    constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null, null)
+    constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null, null, null)
 }
