@@ -1,13 +1,12 @@
 import {useEffect, useState} from "react";
 import CenterService from "../services/CenterService"
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel} from "@mui/material";
 import Center from "./Center"
 
 export default function Centers(){
 
     const [loading, setLoading] = useState(true);
     const [centers, setCenters] = useState(null);
-//    const [center, setCenter] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,6 +22,28 @@ export default function Centers(){
         fetchData();
     }, []);
 
+    const [rowData, setRowData] = useState(centers);
+    const [orderDirection, setOrderDirection] = useState("asc");
+
+    const sortArray = (arr:any, orderBy:any) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+                return arr.sort((a:any, b:any) =>
+                    a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0
+                );
+            case "desc":
+                return arr.sort((a:any, b:any) =>
+                    a.rating < b.rating ? 1 : b.rating < a.rating ? -1 : 0
+                );
+        }
+    };
+
+    const handleSortRequest = () => {
+        setRowData(sortArray(centers, orderDirection));
+        setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
+    };
+
     return(
 
         <TableContainer component={Paper}>
@@ -35,7 +56,10 @@ export default function Centers(){
                         <TableCell align={"center"}>Name</TableCell>
                         <TableCell align={"center"}>Address</TableCell>
                         <TableCell align={"center"}>Description</TableCell>
-                        <TableCell align={"center"}>Rating</TableCell>
+                        <TableCell align={"center"} onClick={handleSortRequest}>
+                            <TableSortLabel active={true} direction={"desc"}>Rating
+                            </TableSortLabel>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                     {!loading && (
