@@ -24,7 +24,7 @@ data class RegisteredUserDto(
         user.jmbg.toString(),
         user.name,
         user.surname,
-        null,
+        user.password,
         user.address,
         user.city,
         user.country,
