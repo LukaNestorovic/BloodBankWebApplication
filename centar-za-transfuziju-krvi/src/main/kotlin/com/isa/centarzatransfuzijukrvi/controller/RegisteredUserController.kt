@@ -25,8 +25,9 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
     fun updateRegisteredUser(@RequestBody newUserInfo: RegisteredUserDto) : ResponseEntity<RegisteredUser> =
         ResponseEntity(registeredUserService.update(newUserInfo),HttpStatus.ACCEPTED)
 
-    @GetMapping(path = ["/profile"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping(path = ["/profile"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findRegisteredUser(@RequestBody userQuery: RegisteredUserDto) : ResponseEntity<RegisteredUserDto> {
+        println(userQuery.email)
         val user = registeredUserService.findByEmail(userQuery.email)
         val userDTO = RegisteredUserDto(user)
         return ResponseEntity(userDTO,HttpStatus.ACCEPTED)

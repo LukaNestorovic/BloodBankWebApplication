@@ -5,6 +5,7 @@ import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 
 data class RegisteredUserDto(
     val email: String,
+    val jmbg: String,
     val name: String?,
     val surname: String?,
     val password: String?,
@@ -20,6 +21,7 @@ data class RegisteredUserDto(
     constructor(user : RegisteredUser) :
     this(
         user.email.toString(),
+        user.jmbg.toString(),
         user.name,
         user.surname,
         null,
