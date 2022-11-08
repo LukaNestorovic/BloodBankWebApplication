@@ -7,6 +7,10 @@ class CenterService {
     getCenters() {
         return axios.get(CENTER_API_BASE_URL);
     }
+
+    getCenterById(id:any) {
+        return axios.get(CENTER_API_BASE_URL + "/" + id);
+    }
 }
 
 export default new CenterService();

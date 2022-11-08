@@ -24,42 +24,30 @@ export default function Centers(){
     }, []);
 
     return(
-        <div className="container mx-auto my-8">
-            <div className="h-12">
 
-            </div>
-            <div className="flex shadow border-b">
-                <table className="min-w-full">
-                    <thead className="bg-gray-50">
-                    <tr>
-                        <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
-                            Id
-                        </th>
-                        <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
-                            Name
-                        </th>
-                        <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
-                            Address
-                        </th>
-                        <th className="text-right font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
-                            Description
-                        </th>
-                        <th className="text-right font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
-                            Rating
-                        </th>
-                    </tr>
-                    </thead>
+        <TableContainer component={Paper}>
+            <h1 style={{textAlign: 'center',
+                alignSelf: 'center'}}>Centers</h1>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell align={"center"}>Id</TableCell>
+                        <TableCell align={"center"}>Name</TableCell>
+                        <TableCell align={"center"}>Address</TableCell>
+                        <TableCell align={"center"}>Description</TableCell>
+                        <TableCell align={"center"}>Rating</TableCell>
+                    </TableRow>
+                </TableHead>
                     {!loading && (
-                        <tbody className="bg-white">
+                        <TableBody>
                         {centers.map((center:any) => (
                             <Center
                                 center={center}
                                 key={center.id}/>
                         ))}
-                        </tbody>
+                        </TableBody>
                     )}
-                </table>
-            </div>
-        </div>
+                </Table>
+            </TableContainer>
     );
 };

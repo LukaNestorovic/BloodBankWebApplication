@@ -1,27 +1,32 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {TableCell, TableRow} from "@mui/material";
 
-const Center = (center:any) => {
+// @ts-ignore
+const Center = ({center}) => {
 
     return (
-        <tr key={center.id}>
-        <td className="text-left px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{center.name}</div>
-            </td>
-            <td className="text-left px-6 py-4 whitespace-nowrap">
-    <div className="text-sm text-gray-500">{center.address}</div>
-        </td>
-        <td className="text-left px-6 py-4 whitespace-nowrap">
-    <div className="text-sm text-gray-500">{center.description}</div>
-        </td>
-            <td className="text-left px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-500">{center.rating}</div>
-            </td>
-        <td className="text-right px-6 py-4 whitespace-nowrap font-medium text-sm">
+        <TableRow key={center.id}>
+            <TableCell align={"center"}>
+                <div>{center.id}</div>
+            </TableCell >
+        <TableCell align={"center"}>
+        <div>{center.name}</div>
+            </TableCell>
+            <TableCell align={"center"}>
+    <div >{center.address}</div>
+        </TableCell>
+        <TableCell align={"center"}>
+    <div >{center.description}</div>
+        </TableCell>
+            <TableCell align={"center"}>
+                <div >{center.rating}</div>
+            </TableCell>
+        <td >
 
 
         </td>
-        </tr>
+        </TableRow>
 );
 };
 
