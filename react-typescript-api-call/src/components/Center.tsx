@@ -22,10 +22,6 @@ const Center = ({center}) => {
             <TableCell align={"center"}>
                 <div >{center.rating}</div>
             </TableCell>
-        <td >
-
-
-        </td>
         </TableRow>
 );
 };
