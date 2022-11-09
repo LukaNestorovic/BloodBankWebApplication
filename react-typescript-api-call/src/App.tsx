@@ -5,6 +5,7 @@ import Register from "./components/Register"
 import Centers from "./components/Centers"
 import Navbar from "./components/Navbar"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Questionnaire from "./components/Questionnaire";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<LogIn />}></Route>
             <Route path="/register" element={<Register />} />
               <Route path="/centers" element={<Centers />}/>
+            <Route path="/question" element={<Questionnaire/>}/>
           </Routes>
         </BrowserRouter>
       </>

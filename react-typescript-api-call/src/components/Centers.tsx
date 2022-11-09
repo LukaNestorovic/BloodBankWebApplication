@@ -53,8 +53,10 @@ export default function Centers(){
                 <TableHead>
                     <TableRow>
                         <TableCell align={"center"}>Id</TableCell>
-                        <TableCell align={"center"}>Name</TableCell>
-                        <TableCell align={"center"}>Address</TableCell>
+                        <TableCell align={"center"} onClick={handleSortRequest}><TableSortLabel active={true} direction={"desc"}>
+                            Name</TableSortLabel></TableCell>
+                        <TableCell align={"center"} onClick={handleSortRequest}>
+                            <TableSortLabel active={true} direction={"desc"}>Address</TableSortLabel></TableCell>
                         <TableCell align={"center"}>Description</TableCell>
                         <TableCell align={"center"} onClick={handleSortRequest}>
                             <TableSortLabel active={true} direction={"desc"}>Rating
