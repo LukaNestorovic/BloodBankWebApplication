@@ -36,18 +36,12 @@ export default function UpdateProfile() {
         points: "",
         category: ""
     })
-    const[showPassword,setShowPassword] = useState(false);
-    const[passwordRepeat,setPasswordRepeat] = useState("");
-    const[oldPassword,setOldPassword] = useState("")
-    const[oldPasswordRepeat,setOldPasswordRepeat] = useState("")
-    const[knownOldPassword,setKnownOldPassword] = useState("")
 
-    const handleGenderChange = (e: SelectChangeEvent) => {
-        setUser({
-            ...user,
-            gender : e.target.value
-        })
-    };
+    const[showPassword,setShowPassword] = useState(false);
+
+    const[passwordRepeat,setPasswordRepeat] = useState("");
+    
+    const[knownOldPassword,setKnownOldPassword] = useState("")
 
 
     const handleClickShowPassword = () => {
@@ -100,22 +94,10 @@ export default function UpdateProfile() {
 
     const updateUser = (e: any) => {
         e.preventDefault();
-        if(user.password != passwordRepeat){
+        if(user.password != passwordRepeat || user.password != knownOldPassword){
             alert("New passwords dont match!");
             return;
         }
-        if(oldPassword!=oldPasswordRepeat || oldPassword!=knownOldPassword || oldPasswordRepeat!=knownOldPassword){
-            alert("Old passowrds dont match!");
-            return;
-        }
-        if(user.password==""){
-            console.log("LAST KNOWN PW: ",knownOldPassword)
-            setUser({
-                ...user,
-                password: knownOldPassword
-            })
-        }
-        //TODO STOP THREAD UNTIL SETUSER FINISHES
         UserService.updateUser(user)
             .then((response) => {
                 console.log(response);
@@ -141,8 +123,30 @@ export default function UpdateProfile() {
                 <h1 style={{alignSelf:'center'}}>Update profile</h1>
                 <TextField id="outlined-basic" value={user.email} label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="email" onChange={(e) => alert("You cant edit email!")} type="text"/>
                 <TextField value={user.jmbg} id="outlined-basic" label="JMBG" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="jmbg" onChange={() => alert("You cant change JMBG!")}/>
+                <TextField value={user.name} id="outlined-basic" label="Name" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="name" onChange={handleChange}/>
+                <TextField value={user.surname} id="outlined-basic" label="Surname" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="surname" onChange={handleChange}/>
+                <TextField value={user.address} id="outlined-basic" label="Address" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="address" onChange={handleChange}/>
+                <TextField value={user.city} id="outlined-basic" label="City" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="city" onChange={handleChange}/>
+                <TextField value={user.country} id="outlined-basic" label="Country" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="country" onChange={handleChange}/>
+                <TextField value={user.phone} id="outlined-basic" label="Phone" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="phone" onChange={handleChange}/>
+                <FormControl style={{width:'60ch', alignSelf:'center'}}>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    name="gender"
+                    id="demo-simple-select"
+                    value={user.gender}
+                    label="Gender"
+                    onChange={handleChange}
+                >
+                    <MenuItem value={"male"}>Male</MenuItem>
+                    <MenuItem value={"female"}>Female</MenuItem>
+                </Select>
+                </FormControl>
+                <TextField value={user.occupation} id="outlined-basic" label="Occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="occupation"  onChange={handleChange}/>
+                <TextField value={user.information} id="outlined-basic" label="Information about occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="information" onChange={handleChange}/>
                 <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
-                    <InputLabel htmlFor="filled-adornment-password" >New Password</InputLabel>
+                    <InputLabel htmlFor="filled-adornment-password" >Old Password</InputLabel>
                         <FilledInput
                             id="filled-adornment-password"
                             type={showPassword ? 'text' : 'password'}
@@ -163,76 +167,12 @@ export default function UpdateProfile() {
                 />
                 </FormControl>
                 <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
-                    <InputLabel htmlFor="filled-adornment-password">Repeat new password</InputLabel>
+                    <InputLabel htmlFor="filled-adornment-password">Repeat password</InputLabel>
                     <FilledInput
                         id="filled-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         name="password"
                         onChange={e => {setPasswordRepeat(e.target.value)}}
-                        endAdornment={
-                            <InputAdornment position="end" >
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
-                <TextField value={user.name} id="outlined-basic" label="Name" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="name" onChange={handleChange}/>
-                <TextField value={user.surname} id="outlined-basic" label="Surname" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="surname" onChange={handleChange}/>
-                <TextField value={user.address} id="outlined-basic" label="Address" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="address" onChange={handleChange}/>
-                <TextField value={user.city} id="outlined-basic" label="City" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="city" onChange={handleChange}/>
-                <TextField value={user.country} id="outlined-basic" label="Country" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="country" onChange={handleChange}/>
-                <TextField value={user.phone} id="outlined-basic" label="Phone" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="phone" onChange={handleChange}/>
-                <FormControl style={{width:'60ch', alignSelf:'center'}}>
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    name="gender"
-                    id="demo-simple-select"
-                    value={user.gender}
-                    label="Gender"
-                    onChange={e => {handleGenderChange(e)}}
-                >
-                    <MenuItem value={"male"}>Male</MenuItem>
-                    <MenuItem value={"female"}>Female</MenuItem>
-                </Select>
-                </FormControl>
-                <TextField value={user.occupation} id="outlined-basic" label="Occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="occupation"  onChange={handleChange}/>
-                <TextField value={user.information} id="outlined-basic" label="Information about occupation" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="information" onChange={handleChange}/>
-                <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
-                    <InputLabel htmlFor="filled-adornment-password" >Old Password</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name="password"
-                            onChange={e => setOldPassword(e.target.value)}
-                            endAdornment={
-                                <InputAdornment position="end" >
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                />
-                </FormControl>
-                <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
-                    <InputLabel htmlFor="filled-adornment-password">Repeat new password</InputLabel>
-                    <FilledInput
-                        id="filled-adornment-password"
-                        type={showPassword ? 'text' : 'password'}
-                        name="password"
-                        onChange={e => {setOldPasswordRepeat(e.target.value)}}
                         endAdornment={
                             <InputAdornment position="end" >
                                 <IconButton

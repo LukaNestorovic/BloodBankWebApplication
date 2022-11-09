@@ -41,7 +41,6 @@ data class RegisteredUser(
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
         if(newData.surname!=null) this.surname = newData.surname
-        if(newData.password!=null) this.password = newData.password
         if(newData.address!=null) this.address = newData.address
         if(newData.city!=null) this.city = newData.city
         if(newData.country!=null) this.country = newData.country
