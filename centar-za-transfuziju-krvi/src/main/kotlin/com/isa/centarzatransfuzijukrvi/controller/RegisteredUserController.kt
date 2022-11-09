@@ -22,8 +22,13 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
         return ResponseEntity(newRegisteredUser, HttpStatus.CREATED)
     }
     @PutMapping(path = ["/profile"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun updateRegisteredUser(@RequestBody newUserInfo: RegisteredUserDto) : ResponseEntity<RegisteredUser> =
-        ResponseEntity(registeredUserService.update(newUserInfo),HttpStatus.ACCEPTED)
+    fun updateRegisteredUser(@RequestBody newUserInfo: RegisteredUserDto) : ResponseEntity<RegisteredUser> {
+        val retVal = registeredUserService.update(newUserInfo)
+        if(retVal==null){
+            return ResponseEntity(null,HttpStatus.UNAUTHORIZED)
+        }
+        return ResponseEntity(retVal,HttpStatus.ACCEPTED)
+    }
 
     @PostMapping(path = ["/profile"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findRegisteredUser(@RequestBody userQuery: RegisteredUserDto) : ResponseEntity<RegisteredUserDto> {

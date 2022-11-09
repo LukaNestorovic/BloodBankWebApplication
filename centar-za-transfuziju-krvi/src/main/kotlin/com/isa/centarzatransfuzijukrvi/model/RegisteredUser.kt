@@ -8,36 +8,35 @@ data class RegisteredUser(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Int?,
+    val id: Int,
     @Column
-    var name: String?,
+    var name: String,
     @Column
-    var surname: String?,
+    var surname: String,
     @Column
-    val email: String?,
+    val email: String,
     @Column
-    var password: String?,
+    var password: String,
     @Column
-    var address: String?,
+    var address: String,
     @Column
-    var city: String?,
+    var city: String,
     @Column
-    var country: String?,
+    var country: String,
     @Column
-    var phone: String?,
+    var phone: String,
     @Column
-    val jmbg: String?,
+    val jmbg: String,
     @Column
-    var gender: String?,
+    var gender: String,
     @Column
-    var occupation: String?,
+    var occupation: String,
     @Column
-    var information: String?,
+    var information: String,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "card", referencedColumnName = "id")
     var card: Loyalty?,
 ) {
-    constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null, null)
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
         if(newData.surname!=null) this.surname = newData.surname

@@ -40,8 +40,6 @@ export default function UpdateProfile() {
     const[showPassword,setShowPassword] = useState(false);
 
     const[passwordRepeat,setPasswordRepeat] = useState("");
-    
-    const[knownOldPassword,setKnownOldPassword] = useState("")
 
 
     const handleClickShowPassword = () => {
@@ -78,9 +76,6 @@ export default function UpdateProfile() {
                     points: response.data.card.points,
                     category: response.data.card.category
                 });
-                setKnownOldPassword(response.data.password);
-                console.log(knownOldPassword)
-                console.log(response.data.password)
             })
             .catch((error) => {
                 console.log(error);
@@ -94,8 +89,8 @@ export default function UpdateProfile() {
 
     const updateUser = (e: any) => {
         e.preventDefault();
-        if(user.password != passwordRepeat || user.password != knownOldPassword){
-            alert("New passwords dont match!");
+        if(user.password != passwordRepeat){
+            alert("Passwords dont match!");
             return;
         }
         UserService.updateUser(user)
@@ -104,12 +99,10 @@ export default function UpdateProfile() {
             })
             .catch((error) => {
                 console.log(error);
+                if(error.response.status==401){
+                    alert("Wrong password!")
+                }
             });
-    };
-
-
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
     };
 
 
@@ -157,7 +150,6 @@ export default function UpdateProfile() {
                             <IconButton
                                 aria-label="toggle password visibility"
                                 onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
                                 edge="end"
                             >
                                 {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -178,7 +170,6 @@ export default function UpdateProfile() {
                                 <IconButton
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
                                     edge="end"
                                 >
                                     {showPassword ? <VisibilityOff /> : <Visibility />}

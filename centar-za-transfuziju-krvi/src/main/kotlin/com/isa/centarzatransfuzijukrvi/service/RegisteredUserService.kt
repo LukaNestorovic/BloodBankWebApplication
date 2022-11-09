@@ -21,8 +21,10 @@ class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredU
         return registeredUserRepository.save(registeredUser)
     }
 
-    fun update(newUserInfo: RegisteredUserDto) : RegisteredUser{
+    fun update(newUserInfo: RegisteredUserDto) : RegisteredUser? {
         var user = registeredUserRepository.findOneByEmail(newUserInfo.email)
+        if(user.password.compareTo(newUserInfo.password.toString())!=0)
+            return null
         user.updateUserFields(newUserInfo)
         return registeredUserRepository.save(user)
     }
