@@ -1,12 +1,14 @@
 package com.isa.centarzatransfuzijukrvi.model
 
-import javax.persistence.*
-import com.fasterxml.jackson.annotation.JsonIgnore
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 @Entity
-data class RegisteredUser(
+data class SysAdmin(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column
     val id: Int?,
     @Column
@@ -33,14 +35,6 @@ data class RegisteredUser(
     val occupation: String?,
     @Column
     val information: String?,
-    @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
-    @JoinColumn(name = "card", referencedColumnName = "id")
-    var card: Loyalty?,
-    @Column
-    val bloodGroup: String?,
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    val donorForm: DonorForm?
 ) {
-    constructor() : this(null,null,null,null,null,null,null,null,null,null,null,null,null, null, null,null)
+    constructor(): this(null,null,null,null,null,null,null,null,null,null,null,null,null)
 }
