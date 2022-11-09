@@ -96,11 +96,12 @@ export default function UpdateProfile() {
         UserService.updateUser(user)
             .then((response) => {
                 console.log(response);
+                alert("Successfully saved user data!");
             })
             .catch((error) => {
-                console.log(error);
+                //console.log(error);
                 if(error.response.status==401){
-                    alert("Wrong password!")
+                    alert("Wrong password!");
                 }
             });
     };
