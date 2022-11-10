@@ -8,7 +8,7 @@ data class Loyalty(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Int,
+    val id: Int?=null,
     @Column
     val points: Int = 0,
     @Column
