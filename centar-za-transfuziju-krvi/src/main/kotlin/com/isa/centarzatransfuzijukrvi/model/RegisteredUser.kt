@@ -42,4 +42,5 @@ data class RegisteredUser(
     @OneToOne(mappedBy = "user")
     val donorForm: DonorForm?
 ) {
+
 }
