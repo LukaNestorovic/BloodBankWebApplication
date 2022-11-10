@@ -34,7 +34,8 @@ export default function UpdateProfile() {
         occupation: "",
         information: "",
         points: "",
-        category: ""
+        category: "",
+        benefits: ""
     })
 
     const[showPassword,setShowPassword] = useState(false);
@@ -74,7 +75,8 @@ export default function UpdateProfile() {
                     occupation: response.data.occupation,
                     information: response.data.information,
                     points: response.data.card.points,
-                    category: response.data.card.category
+                    category: response.data.card.category,
+                    benefits: response.data.card.benefits
                 });
             })
             .catch((error) => {
@@ -114,9 +116,13 @@ export default function UpdateProfile() {
     return (
         <Container>
             <Stack direction="column" spacing={1}>
-                <h1 style={{alignSelf:'center'}}>Update profile</h1>
+                <h1 style={{alignSelf:'center'}}>Profile information (UNEDITABLE)</h1>
                 <TextField id="outlined-basic" value={user.email} label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="email" onChange={(e) => alert("You cant edit email!")} type="text"/>
                 <TextField value={user.jmbg} id="outlined-basic" label="JMBG" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="jmbg" onChange={() => alert("You cant change JMBG!")}/>
+                <TextField value={user.points} id="outlined-basic" label="Donor points" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="jmbg" onChange={() => alert("You cant change points!")}/>
+                <TextField value={user.category} id="outlined-basic" label="Donor category" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="jmbg" onChange={() => alert("You cant change category!")}/>
+                <TextField value={user.benefits} id="outlined-basic" label="Donor category" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="jmbg" onChange={() => alert("You cant change benefits!")}/>
+                <h1 style={{alignSelf:'center'}}>Profile information (EDITABLE)</h1>
                 <TextField value={user.name} id="outlined-basic" label="Name" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="name" onChange={handleChange}/>
                 <TextField value={user.surname} id="outlined-basic" label="Surname" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="surname" onChange={handleChange}/>
                 <TextField value={user.address} id="outlined-basic" label="Address" variant="filled" style={{width:'60ch', alignSelf:'center'}} name="address" onChange={handleChange}/>
