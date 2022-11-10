@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin(origins=["*"])
 class CenterController(@Autowired val centerService: CenterService) {
 
-    @GetMapping(path = ["/centers"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun findAll(): ResponseEntity<List<Center>> = ResponseEntity(centerService.findAll(),HttpStatus.OK)
+    @GetMapping(path = ["/global-centers"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun findAllGlobal(): ResponseEntity<List<Center>> = ResponseEntity(centerService.findAll(),HttpStatus.OK)
 
 }
