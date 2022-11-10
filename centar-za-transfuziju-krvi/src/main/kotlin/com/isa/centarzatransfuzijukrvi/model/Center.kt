@@ -14,7 +14,7 @@ data class Center(
     @Column
     val name: String,
     @Column
-    val adress: String,
+    val address: String,
     @Column
     val description: String,
     @Column
