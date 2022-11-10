@@ -8,7 +8,7 @@ data class DonorForm(
     @Id
     @GeneratedValue
     @Column
-    val id: Int,
+    val id: Int?=null,
     @Column
     val date: Date,
     @Column

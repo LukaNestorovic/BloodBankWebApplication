@@ -11,7 +11,7 @@ data class Delivery(
     @Id
     @GeneratedValue
     @Column
-    val id: Int,
+    val id: Int?=null,
     @Column
     val bloodType: String,
     @Column

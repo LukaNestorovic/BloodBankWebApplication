@@ -10,7 +10,7 @@ data class Center(
     @Id
     @GeneratedValue
     @Column
-    val id: Int,
+    val id: Int?=null,
     @Column
     val name: String,
     @Column
