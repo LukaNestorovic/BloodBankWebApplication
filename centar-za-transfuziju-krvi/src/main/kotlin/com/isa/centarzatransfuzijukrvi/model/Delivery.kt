@@ -1,24 +1,22 @@
 package com.isa.centarzatransfuzijukrvi.model
 
+import java.util.Date
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class Center(
+data class Delivery(
     @Id
     @GeneratedValue
     @Column
     val id: Int,
     @Column
-    val name: String,
+    val bloodType: String,
     @Column
-    val address: String,
+    val amount: Double,
     @Column
-    val description: String,
-    @Column
-    val rating: Double) {
-
-
+    val date: Date
+) {
 }

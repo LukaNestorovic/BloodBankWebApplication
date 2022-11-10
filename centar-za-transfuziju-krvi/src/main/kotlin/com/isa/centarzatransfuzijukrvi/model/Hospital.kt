@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class Center(
+data class Hospital(
     @Id
     @GeneratedValue
     @Column
@@ -16,9 +16,6 @@ data class Center(
     @Column
     val address: String,
     @Column
-    val description: String,
-    @Column
-    val rating: Double) {
-
-
+    val description: String
+) {
 }
