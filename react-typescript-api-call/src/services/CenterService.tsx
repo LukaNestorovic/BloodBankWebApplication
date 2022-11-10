@@ -4,7 +4,7 @@ const CENTER_API_BASE_URL = "http://localhost:8080/api/";
 
 class CenterService {
     getCenters() {
-        return axios.get(CENTER_API_BASE_URL + "centers");
+        return axios.get(CENTER_API_BASE_URL + "global-centers");
     }
 }
 
