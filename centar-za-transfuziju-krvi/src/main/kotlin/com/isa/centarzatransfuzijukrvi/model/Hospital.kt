@@ -10,13 +10,12 @@ data class Hospital(
     @Id
     @GeneratedValue
     @Column
-    val id: Int?,
+    val id: Int,
     @Column
-    val name: String?,
+    val name: String,
     @Column
-    val address: String?,
+    val address: String,
     @Column
-    val description: String?
+    val description: String
 ) {
-    constructor(): this(null,null,null,null)
 }

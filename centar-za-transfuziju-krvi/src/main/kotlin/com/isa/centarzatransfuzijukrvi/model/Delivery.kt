@@ -11,13 +11,12 @@ data class Delivery(
     @Id
     @GeneratedValue
     @Column
-    val id: Int?,
+    val id: Int,
     @Column
-    val bloodType: String?,
+    val bloodType: String,
     @Column
-    val amount: Double?,
+    val amount: Double,
     @Column
-    val date: Date?
+    val date: Date
 ) {
-    constructor(): this(null,null,null,null)
 }

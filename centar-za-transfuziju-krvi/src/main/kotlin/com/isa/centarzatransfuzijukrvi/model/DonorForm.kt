@@ -8,40 +8,39 @@ data class DonorForm(
     @Id
     @GeneratedValue
     @Column
-    val id: Int?,
+    val id: Int,
     @Column
-    val date: Date?,
+    val date: Date,
     @Column
-    val numberDonation: Int?,
+    val numberDonation: Int,
     @Column
-    val question1: String?,
+    val question1: String,
     @Column
-    val question2: String?,
+    val question2: String,
     @Column
-    val question3: String?,
+    val question3: String,
     @Column
-    val question4: String?,
+    val question4: String,
     @Column
-    val question5: String?,
+    val question5: String,
     @Column
-    val question6: String?,
+    val question6: String,
     @Column
-    val question7: String?,
+    val question7: String,
     @Column
-    val question8: String?,
+    val question8: String,
     @Column
-    val question9: String?,
+    val question9: String,
     @Column
-    val question10: String?,
+    val question10: String,
     @Column
-    val question11: String?,
+    val question11: String,
     @Column
-    val question12: String?,
+    val question12: String,
     @Column
     val question13: String?,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "user", referencedColumnName = "id")
     val user: RegisteredUser?
 ) {
-    constructor(): this(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 }

@@ -10,17 +10,15 @@ data class Center(
     @Id
     @GeneratedValue
     @Column
-    val id: Int?,
+    val id: Int,
     @Column
-    val name: String?,
+    val name: String,
     @Column
-    val address: String?,
+    val address: String,
     @Column
-    val description: String?,
+    val description: String,
     @Column
-    val rating: Double?) {
-    constructor() : this(null, null, null ,null, null) {
+    val rating: Double) {
 
-    }
 
 }
