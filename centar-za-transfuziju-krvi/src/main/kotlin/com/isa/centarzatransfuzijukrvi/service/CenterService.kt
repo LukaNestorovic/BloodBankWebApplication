@@ -9,5 +9,6 @@ import org.springframework.stereotype.Service
 class CenterService(@Autowired val centerRepository: CenterRepository) {
 
     fun findAll(): List<Center> = centerRepository.findAll()
+    fun findFiltered(query : Center): List<Center>? = centerRepository.findCentersByFilter(query.name,query.description,query.address,query.rating)
 
 }

@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(path = ["api"])
@@ -18,5 +15,8 @@ class CenterController(@Autowired val centerService: CenterService) {
 
     @GetMapping(path = ["/global-centers"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findAllGlobal(): ResponseEntity<List<Center>> = ResponseEntity(centerService.findAll(),HttpStatus.OK)
+
+    @PostMapping(path = ["/global-centers"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun findFilterGlobal(@RequestBody query: Center) : ResponseEntity<List<Center>> = ResponseEntity(centerService.findFiltered(query),HttpStatus.OK)
 
 }
