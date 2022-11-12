@@ -1,9 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Center(
@@ -18,7 +15,10 @@ data class Center(
     @Column
     val description: String,
     @Column
-    val rating: Double) {
+    val rating: Double,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val complaints: List<Complaint>
+) {
 
 
 }

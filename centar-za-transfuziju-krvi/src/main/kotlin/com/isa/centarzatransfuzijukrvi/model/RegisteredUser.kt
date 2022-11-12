@@ -40,7 +40,9 @@ data class RegisteredUser(
     val bloodGroup: String,
     @JsonIgnore
     @OneToOne(mappedBy = "user")
-    val donorForm: DonorForm?
+    val donorForm: DonorForm?,
+    @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val complaints: List<Complaint>
 ) {
 
 }
