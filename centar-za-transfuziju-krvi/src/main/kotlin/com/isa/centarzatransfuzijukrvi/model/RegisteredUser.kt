@@ -9,29 +9,29 @@ data class RegisteredUser(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     val id: Int,
-    @Column
+    @Column(nullable = false)
     var name: String,
-    @Column
+    @Column(nullable = false)
     var surname: String,
-    @Column
+    @Column(nullable = false)
     val email: String,
-    @Column
+    @Column(nullable = false)
     var password: String,
-    @Column
+    @Column(nullable = false)
     var address: String,
-    @Column
+    @Column(nullable = false)
     var city: String,
-    @Column
+    @Column(nullable = false)
     var country: String,
-    @Column
+    @Column(nullable = false)
     var phone: String,
-    @Column
+    @Column(nullable = false)
     val jmbg: String,
-    @Column
+    @Column(nullable = false)
     var gender: String,
-    @Column
+    @Column(nullable = false)
     var occupation: String,
-    @Column
+    @Column(nullable = false)
     var information: String,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "card", referencedColumnName = "id")
