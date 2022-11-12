@@ -37,7 +37,7 @@ data class RegisteredUser(
     @JoinColumn(name = "card", referencedColumnName = "id")
     var card: Loyalty?,
     @Column
-    val bloodGroup: String,
+    val bloodGroup: String?,
     @JsonIgnore
     @OneToOne(mappedBy = "user")
     val donorForm: DonorForm?
