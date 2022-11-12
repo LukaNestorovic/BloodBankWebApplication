@@ -2,6 +2,7 @@ package com.isa.centarzatransfuzijukrvi.model
 
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDto
 import javax.persistence.*
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 @Entity
 data class RegisteredUser(
@@ -36,6 +37,11 @@ data class RegisteredUser(
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "card", referencedColumnName = "id")
     var card: Loyalty?,
+    @Column
+    val bloodGroup: String?,
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    val donorForm: DonorForm?
 ) {
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
