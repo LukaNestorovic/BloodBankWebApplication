@@ -3,7 +3,7 @@ import './App.css';
 import LogIn from "./components/LogIn";
 import Register from "./components/Register"
 import Navbar from "./components/Navbar"
-import Centers from "./components/GlobalCenters"
+import GlobalCenters from "./components/GlobalCenters"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
             <Route index element={<LogIn />} />
             <Route path="/" element={<LogIn />}></Route>
             <Route path="/register" element={<Register />} />
-            <Route path="/global-centers" element={<Centers />} />
+            <Route path="/global-centers" element={<GlobalCenters />} />
           </Routes>
         </BrowserRouter>
       </>
