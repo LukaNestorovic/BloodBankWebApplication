@@ -42,7 +42,9 @@ data class RegisteredUser(
     @OneToOne(mappedBy = "user")
     val donorForm: DonorForm?,
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val complaints: List<Complaint>
+    val complaints: List<Complaint>,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val ratings: List<Complaint>
 ) {
 
 }
