@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import {
+    Alert,
     Button,
     Container,
     FilledInput,
@@ -35,6 +36,7 @@ export default function Register() {
     const[gender, setGender] = useState("")
     const[email, setEmail] = useState("")
     const[password, setPassword] = useState("")
+    const[repeatPassword, setRepeatPassword] = useState("")
     const navigate = useNavigate()
 
     const [user, setUser] = useState({
@@ -75,22 +77,19 @@ export default function Register() {
         setUser({ ...user, [e.target.name]: value });
     };
 
-    const handleChange3 = (e: any) => {
-        const value = e.target.value;
-        setUser({ ...user, [e.target.name]: value });
-    };
-
-
     const saveUser = (e: any) => {
         e.preventDefault();
-        UserService.saveUser(user)
-            .then((response) => {
-                console.log(response);
-                //navigate("/register");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if(user.password === user.repeatPassword) {
+            UserService.saveUser(user)
+                .then((response) => {
+                    console.log(response);
+                    //navigate("/register");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        else alert("Sifre se ne poklapaju")
     };
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -127,7 +126,7 @@ export default function Register() {
                     <FilledInput
                         id="filled-adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
-                        name="password"
+                        name="repeatPassword"
                         onChange={e => {handleChange('password'); handleChange2(e)}}
                         endAdornment={
                             <InputAdornment position="end" >

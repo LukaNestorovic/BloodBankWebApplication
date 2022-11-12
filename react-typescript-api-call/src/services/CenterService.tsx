@@ -7,7 +7,14 @@ class CenterService {
         return axios.get(CENTER_API_BASE_URL + "global-centers");
     }
     getCentersGlobalFilter(data: any){
-        return axios.post(CENTER_API_BASE_URL + "global-centers",data)
+        return axios.post(CENTER_API_BASE_URL + "global-centers", data)
+        
+    getCenters() {
+        return axios.get(CENTER_API_BASE_URL + "centers");
+    }
+
+    getCenterById(id:any) {
+        return axios.get(CENTER_API_BASE_URL + "centers" + "/" + id);
     }
 }
 
