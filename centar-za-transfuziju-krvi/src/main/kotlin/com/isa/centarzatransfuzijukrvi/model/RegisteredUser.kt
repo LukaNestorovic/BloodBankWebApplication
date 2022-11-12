@@ -44,7 +44,9 @@ data class RegisteredUser(
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val complaints: List<Complaint>,
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val ratings: List<Complaint>
+    val ratings: List<Complaint>,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val reports: List<ExamReport>,
 ) {
 
 }

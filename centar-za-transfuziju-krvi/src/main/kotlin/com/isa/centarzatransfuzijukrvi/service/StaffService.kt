@@ -16,5 +16,6 @@ class StaffService(val staffRepository: StaffRepository) {
                               staff.gender,
                               staff.email,
                               staff.password,
-                              staff.role))
+                              staff.role,
+                              staff.reports))
 }
