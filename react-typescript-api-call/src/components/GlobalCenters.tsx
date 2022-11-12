@@ -82,7 +82,7 @@ export default function BasicTable() {
         <TextField onChange={handleQuery} name="address" id="outlined-basic" label="Address" variant="outlined" />
         <TextField onChange={handleQuery} name="description" id="outlined-basic" label="Description" variant="outlined" />
         <TextField onChange={handleQuery} name="rating" id="outlined-basic" label="Rating" variant="outlined" />
-        <Button variant="contained" onClick={handleSearch}>Search</Button>
+        <Button variant="contained" onClick={handleSearch}>Search (Refresh)</Button>
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650,maxWidth: 1250, margin: "auto"}} aria-label="simple table">
