@@ -4,7 +4,9 @@ import javax.persistence.*
 
 data class Rating(
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    val id: Int?=null,
     @Column(nullable = false)
     val roomRating: Int,
     @Column(nullable = false)
