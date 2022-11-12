@@ -8,16 +8,16 @@ import java.util.*
 
 @Service
 class CenterService(@Autowired val centerRepository: CenterRepository) {
-
     fun create(center: Center): Center {
         return centerRepository.save(center)
-    }
-
-    fun findAll(): List<Center?>? {
-        return centerRepository.findAll()
     }
 
     fun findCenterById(id: Int): Optional<Center> {
         return centerRepository.findById(id)
     }
+    
+    fun findAll(): List<Center>? = centerRepository.findAll()
+     
+    fun findFiltered(query : Center): List<Center>? = centerRepository.findCentersByFilter(query.name,query.description,query.address,query.rating)
+
 }
