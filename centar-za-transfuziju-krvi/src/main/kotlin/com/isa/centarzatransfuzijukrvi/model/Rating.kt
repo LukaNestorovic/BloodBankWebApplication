@@ -1,7 +1,7 @@
 package com.isa.centarzatransfuzijukrvi.model
 
 import javax.persistence.*
-
+@Entity
 data class Rating(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +20,7 @@ data class Rating(
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     val user: RegisteredUser,
-
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "center_id", referencedColumnName = "id")
+    val center: Center,
 )

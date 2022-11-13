@@ -17,7 +17,9 @@ data class Center(
     @Column
     val rating: Double,
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val complaints: List<Complaint>
+    val complaints: List<Complaint>,
+    @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val ratings: List<Rating>,
 ) {
 
 
