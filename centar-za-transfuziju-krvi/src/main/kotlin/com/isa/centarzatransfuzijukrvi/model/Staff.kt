@@ -14,7 +14,7 @@ data class Staff(
     val surname: String,
     @Column(nullable = false)
     val gender: String,
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     val email: String,
     @Column(nullable = false)
     val password: String,
