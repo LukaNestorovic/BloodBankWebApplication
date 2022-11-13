@@ -2,6 +2,7 @@ package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.Loyalty
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
+import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDto
 import com.isa.centarzatransfuzijukrvi.repository.LoyaltyRepository
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,11 +13,21 @@ class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredU
                             @Autowired val loyaltyRepository: LoyaltyRepository) {
 
     fun findOne(id: Int): RegisteredUser {
-        return registeredUserRepository.getOne(id)
+        return registeredUserRepository.findById(id).get()
     }
 
     fun create(registeredUser: RegisteredUser): RegisteredUser {
         registeredUser.card = Loyalty(user = registeredUser)
         return registeredUserRepository.save(registeredUser)
     }
+
+    fun update(newUserInfo: RegisteredUserDto) : RegisteredUser? {
+        var user = registeredUserRepository.findOneByEmail(newUserInfo.email)
+        if(user.password.compareTo(newUserInfo.password.toString())!=0)
+            return null
+        user.updateUserFields(newUserInfo)
+        return registeredUserRepository.save(user)
+    }
+
+    fun findByEmail(email: String) : RegisteredUser = registeredUserRepository.findOneByEmail(email)
 }

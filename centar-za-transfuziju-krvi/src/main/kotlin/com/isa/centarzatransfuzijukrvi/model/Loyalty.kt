@@ -13,6 +13,8 @@ data class Loyalty(
     val points: Int = 0,
     @Column(nullable = false)
     val category: String = "Regular",
+    @Column
+    val benefits: String = "No benefits",
     @JsonIgnore
     @OneToOne(mappedBy = "card")
     var user: RegisteredUser?=null,
