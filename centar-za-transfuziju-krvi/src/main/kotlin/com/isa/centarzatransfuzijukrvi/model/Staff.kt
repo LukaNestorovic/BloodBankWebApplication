@@ -20,6 +20,16 @@ data class Staff(
     val password: String,
     @Column(nullable = false)
     val role: String,
+    @Column(nullable = false)
+    val address: String,
+    @Column(nullable = false)
+    val city: String,
+    @Column(nullable = false)
+    val country: String,
+    @Column(nullable = false)
+    val phone: String,
+    @Column(nullable = false)
+    val jmbg: String,
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val reports: List<ExamReport>,
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])

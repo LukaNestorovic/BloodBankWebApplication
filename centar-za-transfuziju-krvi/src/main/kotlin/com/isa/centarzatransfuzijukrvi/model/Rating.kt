@@ -16,7 +16,7 @@ data class Rating(
     @Column(nullable = false)
     val locationRating: Int,
     @Column(nullable = false)
-    val cleanlinessGrade: Int,
+    val cleanlinessRating: Int,
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     val user: RegisteredUser,
