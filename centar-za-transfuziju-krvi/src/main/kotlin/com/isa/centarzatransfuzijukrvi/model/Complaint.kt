@@ -20,5 +20,8 @@ data class Complaint(
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "center_id", referencedColumnName = "id")
     val center: Center,
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = true)
+    val staff: Staff,
 ) {
 }
