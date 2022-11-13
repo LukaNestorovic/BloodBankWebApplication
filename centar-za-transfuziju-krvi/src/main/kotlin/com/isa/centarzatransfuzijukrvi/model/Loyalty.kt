@@ -7,11 +7,11 @@ import javax.persistence.*
 data class Loyalty(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(nullable = false)
     val id: Int?=null,
-    @Column
+    @Column(nullable = false)
     val points: Int = 0,
-    @Column
+    @Column(nullable = false)
     val category: String = "Regular",
     @Column
     val benefits: String = "No benefits",

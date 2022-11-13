@@ -41,7 +41,13 @@ data class RegisteredUser(
     val bloodGroup: String?,
     @JsonIgnore
     @OneToOne(mappedBy = "user")
-    val donorForm: DonorForm?
+    val donorForm: DonorForm?,
+    @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val complaints: List<Complaint>,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val ratings: List<Complaint>,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val reports: List<ExamReport>,
 ) {
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
