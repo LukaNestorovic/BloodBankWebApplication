@@ -22,9 +22,7 @@ class CenterController(@Autowired val centerService: CenterService) {
 
     @GetMapping(path = ["/centers"],produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getCenters() : ResponseEntity<List<Center?>> {
-        println("RADI")
         val centerList : List<Center?>? = centerService.findAll()
-        println(centerList)
         return ResponseEntity(centerList, HttpStatus.OK)
     }
 
