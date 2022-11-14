@@ -17,5 +17,5 @@ data class Loyalty(
     val benefits: String = "No benefits",
     @JsonIgnore
     @OneToOne(mappedBy = "card")
-    var user: RegisteredUser?=null,
+    var user: RegisteredUser?,
 )

@@ -130,79 +130,92 @@ export default function UpdateProfile() {
         <Container>
             <Grid container spacing={2} justifyContent="center" alignItems="center" direction="row">
                 <Grid item xs={6}>
-                    <h1 style={{ alignSelf: 'center' }}>Uneditable information</h1>
-                    <TextField required id="outlined-basic" value={user.email} label="Email" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="email" onChange={(e) => alert("You cant edit email!")} type="text" />
-                    <TextField required value={user.jmbg} id="outlined-basic" label="JMBG" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change JMBG!")} />
-                    <TextField required value={user.points} id="outlined-basic" label="Donor points" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change points!")} />
-                    <TextField required value={user.category} id="outlined-basic" label="Donor category" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change category!")} />
-                    <TextField required value={user.benefits} id="outlined-basic" label="Donor benefits" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change benefits!")} />
-
+                    <Stack
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <h1 style={{ alignSelf: 'center' }}>Uneditable information</h1>
+                        <TextField required id="outlined-basic" value={user.email} label="Email" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="email" onChange={(e) => alert("You cant edit email!")} type="text" />
+                        <TextField required value={user.jmbg} id="outlined-basic" label="JMBG" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change JMBG!")} />
+                        <TextField required value={user.points} id="outlined-basic" label="Donor points" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change points!")} />
+                        <TextField required value={user.category} id="outlined-basic" label="Donor category" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change category!")} />
+                        <TextField required value={user.benefits} id="outlined-basic" label="Donor benefits" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="jmbg" onChange={() => alert("You cant change benefits!")} />
+                    </Stack>
                 </Grid>
                 <Grid item xs={6}>
-                    <h1 style={{ alignSelf: 'center' }}>Editable information</h1>
-                    <TextField required value={user.name} id="outlined-basic" label="Name" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="name" onChange={handleChange} />
-                    <TextField required value={user.surname} id="outlined-basic" label="Surname" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="surname" onChange={handleChange} />
-                    <TextField required value={user.address} id="outlined-basic" label="Address" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="address" onChange={handleChange} />
-                    <TextField required value={user.city} id="outlined-basic" label="City" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="city" onChange={handleChange} />
-                    <TextField required value={user.country} id="outlined-basic" label="Country" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="country" onChange={handleChange} />
-                    <TextField required value={user.phone} id="outlined-basic" label="Phone" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="phone" onChange={handleChange} />
-                    <FormControl required style={{ width: '60ch', alignSelf: 'center' }}>
-                        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            name="gender"
-                            id="demo-simple-select"
-                            value={user.gender}
-                            label="Gender"
-                            onChange={handleChange}
-                        >
-                            <MenuItem value={"male"}>Male</MenuItem>
-                            <MenuItem value={"female"}>Female</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField required value={user.occupation} id="outlined-basic" label="Occupation" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="occupation" onChange={handleChange} />
-                    <TextField required value={user.information} id="outlined-basic" label="Information about occupation" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="information" onChange={handleChange} />
-                    <FormControl required variant="filled" style={{ width: '60ch', alignSelf: 'center' }}>
-                        <InputLabel htmlFor="filled-adornment-password" >Old Password</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name="password"
-                            onChange={handleChange}
-                            endAdornment={
-                                <InputAdornment position="end" >
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl required variant="filled" style={{ width: '60ch', alignSelf: 'center' }}>
-                        <InputLabel htmlFor="filled-adornment-password">Repeat password</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name="password"
-                            onChange={e => { setPasswordRepeat(e.target.value) }}
-                            endAdornment={
-                                <InputAdornment position="end" >
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <Button variant="contained" style={{ width: 200, alignSelf: 'center' }} onClick={updateUser}>Save</Button>
+                    <Stack
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <h1 style={{ alignSelf: 'center' }}>Editable information</h1>
+                        <TextField required value={user.name} id="outlined-basic" label="Name" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="name" onChange={handleChange} />
+                        <TextField required value={user.surname} id="outlined-basic" label="Surname" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="surname" onChange={handleChange} />
+                        <TextField required value={user.address} id="outlined-basic" label="Address" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="address" onChange={handleChange} />
+                        <TextField required value={user.city} id="outlined-basic" label="City" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="city" onChange={handleChange} />
+                        <TextField required value={user.country} id="outlined-basic" label="Country" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="country" onChange={handleChange} />
+                        <TextField required value={user.phone} id="outlined-basic" label="Phone" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="phone" onChange={handleChange} />
+                        <FormControl required style={{ width: '60ch', alignSelf: 'center' }}>
+                            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                name="gender"
+                                id="demo-simple-select"
+                                value={user.gender}
+                                label="Gender"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={"male"}>Male</MenuItem>
+                                <MenuItem value={"female"}>Female</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <TextField required value={user.occupation} id="outlined-basic" label="Occupation" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="occupation" onChange={handleChange} />
+                        <TextField required value={user.information} id="outlined-basic" label="Information about occupation" variant="filled" style={{ width: '60ch', alignSelf: 'center' }} name="information" onChange={handleChange} />
+                        <FormControl required variant="filled" style={{ width: '60ch', alignSelf: 'center' }}>
+                            <InputLabel htmlFor="filled-adornment-password" >Old Password</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                onChange={handleChange}
+                                endAdornment={
+                                    <InputAdornment position="end" >
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl required variant="filled" style={{ width: '60ch', alignSelf: 'center' }}>
+                            <InputLabel htmlFor="filled-adornment-password">Repeat password</InputLabel>
+                            <FilledInput
+                                id="filled-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                onChange={e => { setPasswordRepeat(e.target.value) }}
+                                endAdornment={
+                                    <InputAdornment position="end" >
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <Button variant="contained" style={{ width: 200, alignSelf: 'center' }} onClick={updateUser}>Save</Button>
+                    </Stack>
                 </Grid>
             </Grid>
         </Container>

@@ -1,5 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -20,9 +21,11 @@ data class ExamReport(
     val hcv: Boolean,
     @Column(nullable = false)
     val o2: Int,
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     val user: RegisteredUser,
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "staff_id", referencedColumnName = "id")
     val doctor: Staff,

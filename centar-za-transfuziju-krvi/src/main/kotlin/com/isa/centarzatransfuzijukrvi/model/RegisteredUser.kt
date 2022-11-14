@@ -43,11 +43,11 @@ data class RegisteredUser(
     @OneToOne(mappedBy = "user")
     val donorForm: DonorForm?,
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val complaints: List<Complaint>,
+    val complaints: List<Complaint>?,
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val ratings: List<Complaint>,
+    val ratings: List<Complaint>?,
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val reports: List<ExamReport>,
+    val reports: List<ExamReport>?,
 ) {
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name

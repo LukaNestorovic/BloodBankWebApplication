@@ -31,7 +31,7 @@ data class Staff(
     @Column(nullable = false)
     val jmbg: String,
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val reports: List<ExamReport>,
+    val reports: List<ExamReport>?,
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val complaints: List<Complaint>,
+    val complaints: List<Complaint>?,
 )
