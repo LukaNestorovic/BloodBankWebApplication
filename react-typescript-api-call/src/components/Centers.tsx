@@ -25,7 +25,7 @@ export default function Centers(){
     const [rowData, setRowData] = useState(centers);
     const [orderDirection, setOrderDirection] = useState("asc");
 
-    const sortArray = (arr:any, orderBy:any) => {
+    const sortArrayRating = (arr:any, orderBy:any) => {
         switch (orderBy) {
             case "asc":
             default:
@@ -39,8 +39,46 @@ export default function Centers(){
         }
     };
 
-    const handleSortRequest = () => {
-        setRowData(sortArray(centers, orderDirection));
+    const sortArrayName = (arr:any, orderBy:any) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+                return arr.sort((a:any, b:any) =>
+                    a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+                );
+            case "desc":
+                return arr.sort((a:any, b:any) =>
+                    a.name < b.name ? 1 : b.name < a.name ? -1 : 0
+                );
+        }
+    };
+
+    const sortArrayAddress = (arr:any, orderBy:any) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+                return arr.sort((a:any, b:any) =>
+                    a.address > b.address ? 1 : b.address > a.address ? -1 : 0
+                );
+            case "desc":
+                return arr.sort((a:any, b:any) =>
+                    a.address < b.address ? 1 : b.address < a.address ? -1 : 0
+                );
+        }
+    };
+
+    const handleSortRequestRating = () => {
+        setRowData(sortArrayRating(centers, orderDirection));
+        setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
+    };
+
+    const handleSortRequestName = () => {
+        setRowData(sortArrayName(centers, orderDirection));
+        setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
+    };
+
+    const handleSortRequestAddress = () => {
+        setRowData(sortArrayAddress(centers, orderDirection));
         setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
     };
 
@@ -53,12 +91,12 @@ export default function Centers(){
                 <TableHead>
                     <TableRow>
                         <TableCell align={"center"}>Id</TableCell>
-                        <TableCell align={"center"} onClick={handleSortRequest}><TableSortLabel active={true} direction={"desc"}>
+                        <TableCell align={"center"} onClick={handleSortRequestName}><TableSortLabel active={true} direction={"desc"}>
                             Name</TableSortLabel></TableCell>
-                        <TableCell align={"center"} onClick={handleSortRequest}>
+                        <TableCell align={"center"} onClick={handleSortRequestAddress}>
                             <TableSortLabel active={true} direction={"desc"}>Address</TableSortLabel></TableCell>
                         <TableCell align={"center"}>Description</TableCell>
-                        <TableCell align={"center"} onClick={handleSortRequest}>
+                        <TableCell align={"center"} onClick={handleSortRequestRating}>
                             <TableSortLabel active={true} direction={"desc"}>Rating
                             </TableSortLabel>
                         </TableCell>
