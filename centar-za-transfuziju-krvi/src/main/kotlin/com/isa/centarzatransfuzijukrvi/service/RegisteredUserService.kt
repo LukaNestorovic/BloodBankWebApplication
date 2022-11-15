@@ -30,4 +30,6 @@ class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredU
     }
 
     fun findByEmail(email: String) : RegisteredUser = registeredUserRepository.findOneByEmail(email)
+
+    fun findAll(): List<RegisteredUser> = registeredUserRepository.findAll()
 }
