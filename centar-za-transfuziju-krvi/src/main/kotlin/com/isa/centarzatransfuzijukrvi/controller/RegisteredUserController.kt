@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 
 @RestController
@@ -53,5 +54,11 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
             }
         }
         return ResponseEntity(registeredUser3, HttpStatus.NOT_FOUND)
+    }
+
+    @GetMapping(path = ["/users/{userId}"])
+    fun getRegisteredUser(@PathVariable("userId") userId: Int) : ResponseEntity<Optional<RegisteredUser>> {
+        val registeredUser: Optional<RegisteredUser> = registeredUserService.findById(userId)
+        return ResponseEntity(registeredUser, HttpStatus.OK)
     }
 }

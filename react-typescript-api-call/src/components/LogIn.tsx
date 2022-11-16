@@ -75,10 +75,13 @@ export default function LogIn() {
         UserService.logIn(user)
             .then((response) => {
                 console.log(response);
-                localStorage.setItem("id", response.data.id);
+                localStorage.setItem("email", response.data.email);
+                navigate("/donorform");
             })
             .catch((error) => {
                 console.log(error);
+                alert("Wrong email or password");
+
             });
     };
 
