@@ -48,6 +48,9 @@ data class RegisteredUser(
     val ratings: List<Complaint>?,
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val reports: List<ExamReport>?,
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "reguser", referencedColumnName = "id")
+    val reguser: User?
 ) {
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
