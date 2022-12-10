@@ -34,4 +34,6 @@ data class Staff(
     val reports: List<ExamReport>?,
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val complaints: List<Complaint>?,
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val appointments: List<Appointment>?,
 )
