@@ -7,6 +7,9 @@ import UpdateProfile from "./components/UpdateProfile"
 import GlobalCenters from "./components/GlobalCenters"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import DonorForm                      from "./components/DonorForm";
+import Questionnaire from "./components/Questionnaire";
+import AddAppointmentStaff from './components/AddAppointmentStaff';
+
 
 function App() {
   return (
@@ -20,6 +23,8 @@ function App() {
             <Route path="/global-centers" element={<GlobalCenters />} />
             <Route path="/centers" element={<Centers />}/>
             <Route path="/donorform" element={<DonorForm/>}/>
+            <Route path="/question" element={<Questionnaire/>}/>
+            <Route path="/appointment/staff" element={<AddAppointmentStaff/>}/>
           </Routes>
         </BrowserRouter>
       </>
