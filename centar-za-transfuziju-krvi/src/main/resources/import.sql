@@ -12,3 +12,4 @@ insert into staff(id,name,surname,gender,email,password,role,address,city,countr
 insert into complaint(id,text,date,user_id,center_id,staff_id) values (1,"Low quality service.","2022-11-13",1,1,1)
 insert into exam_report(id,height,weight,hiv,hbv,hcv,o2,user_id,staff_id) values (1,180,90,false,false,false,98,1,1)
 insert into rating(id,room_rating,staff_rating,hospitality_rating,location_rating,cleanliness_rating,user_id,center_id) values (1,5,5,5,5,5,1,1)
+insert into appointment(id,time,center_id,doctor_id,user_id) values (1,"2022-12-12 10:00:00",1,NULL,NULL)

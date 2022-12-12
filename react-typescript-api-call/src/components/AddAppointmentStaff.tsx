@@ -6,10 +6,11 @@ import CenterService from "../services/CenterService";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import AppointmentService from "../services/AppointmentService"
 
 
 export default function AddAppointmentStaff() {
-    var i = 0;
+    var i = 1;
     interface Centers {
         center: {
             name: string
@@ -18,7 +19,6 @@ export default function AddAppointmentStaff() {
             rating: number
         }[]
     }
-
 
     const [centers, setCenters] = useState<Centers["center"]>();
 
@@ -34,6 +34,18 @@ export default function AddAppointmentStaff() {
         });
     };
 
+    const handleScheduleAppointment = () => {
+        //console.log(appointment)
+        AppointmentService.scheduleAppointment(appointment).
+        then((response) => {
+            if(response.data==="") alert("Appointment not available at designated time!")
+            else alert("Appointment saved!")
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     // const [centerName, setCenterName] = useState("Select");
 
     // const [date, setDate] = useState(new Date());
@@ -57,9 +69,9 @@ export default function AddAppointmentStaff() {
             });
     }, []);
 
-    React.useEffect(() => {
-        console.log(appointment.date)
-    }, [appointment.date, appointment.centerName]);
+    // React.useEffect(() => {
+    //     console.log(appointment.date)
+    // }, [appointment.date, appointment.centerName]);
 
     return (
         <Stack
@@ -89,7 +101,7 @@ export default function AddAppointmentStaff() {
             </FormControl>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
-                    views={["year","month","day","hours"]}
+                    views={["year","month","day","hours","minutes"]}
                     disablePast
                     ampm={false}
                     renderInput={(props) => <TextField {...props} />}
@@ -101,7 +113,7 @@ export default function AddAppointmentStaff() {
                     })}
                 />
             </LocalizationProvider>
-            <Button variant="contained" style={{ width: 200, alignSelf: 'center' }}>Save</Button>
+            <Button variant="contained" onClick={handleScheduleAppointment} style={{ width: 200, alignSelf: 'center' }}>Save</Button>
         </Stack>
     );
 }
