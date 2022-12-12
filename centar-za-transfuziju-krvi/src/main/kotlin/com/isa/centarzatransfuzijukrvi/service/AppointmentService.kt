@@ -2,6 +2,7 @@ package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
 import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,5 +36,14 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             }
         }
         return null;
+    }
+
+    fun findAll() : List<AppointmentFullDTO>? {
+        var retVal: ArrayList<AppointmentFullDTO> = ArrayList()
+        for(app in appointmentRepository.findAll()){
+            println("FOUND 1")
+            retVal.add(AppointmentFullDTO(app.time,Date(app.time.time+1000*60*60), app.center!!.name))
+        }
+        return retVal
     }
 }

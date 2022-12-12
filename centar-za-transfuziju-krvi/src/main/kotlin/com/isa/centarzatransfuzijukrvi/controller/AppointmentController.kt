@@ -2,6 +2,7 @@ package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
 import com.isa.centarzatransfuzijukrvi.service.AppointmentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -18,5 +19,8 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
         //println("REQUEST:" + unscheduledAppointment.centerName.toString() + " DATE:" + unscheduledAppointment.date.toString())
         return ResponseEntity(appointmentService.create(unscheduledAppointment),HttpStatus.CREATED)
     }
+
+    @GetMapping(path=["appointment/admin"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getAllAdmin(): ResponseEntity<List<AppointmentFullDTO>?> = ResponseEntity(appointmentService.findAll(),HttpStatus.OK)
 
 }
