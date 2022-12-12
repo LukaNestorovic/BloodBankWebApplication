@@ -1,6 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
-import java.util.Date
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -10,7 +10,7 @@ data class DonorForm(
     @Column
     val id: Int?=null,
     @Column
-    val date: Date,
+    val date: Date?,
     @Column
     val numberDonation: Int,
     @Column
@@ -39,8 +39,10 @@ data class DonorForm(
     val question12: String,
     @Column
     val question13: String,
+    @Column
+    val question14: String,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "user", referencedColumnName = "id")
-    val user: RegisteredUser?
+    val user: RegisteredUser
 ) {
 }
