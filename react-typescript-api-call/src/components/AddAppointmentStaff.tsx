@@ -58,17 +58,6 @@ export default function AddAppointmentStaff() {
                 console.log(error);
             });
     }
-    // const [centerName, setCenterName] = useState("Select");
-
-    // const [date, setDate] = useState(new Date());
-
-    // const handleCenterChange = (event: any) => {
-    //     setCenterName(event.target.value)
-    // }
-
-    // const handleDateChange = (event: any) => {
-    //     setDate(event.target.value)
-    // }
 
     React.useEffect(() => {
         CenterService.getCenters().
@@ -93,7 +82,7 @@ export default function AddAppointmentStaff() {
                         title: element.title,
                         start: new Date(element.start),
                         end: new Date(element.start),
-                        resource: element.title,
+                        resource: element.resource,
                     })
                 })
                 setEvents(evs)
