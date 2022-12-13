@@ -34,6 +34,8 @@ data class RegisteredUser(
     var occupation: String,
     @Column(nullable = false)
     var information: String,
+    @Column
+    var role: String?,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "card", referencedColumnName = "id")
     var card: Loyalty?,

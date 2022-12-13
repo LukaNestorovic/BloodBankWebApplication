@@ -35,5 +35,7 @@ data class SysAdmin(
     val occupation: String,
     @Column
     val information: String,
+    @Column
+    val role: String
 ) {
 }
