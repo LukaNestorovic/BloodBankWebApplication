@@ -42,7 +42,12 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         var retVal: ArrayList<AppointmentFullDTO> = ArrayList()
         for(app in appointmentRepository.findAll()){
             println("FOUND 1")
-            retVal.add(AppointmentFullDTO(app.time,Date(app.time.time+1000*60*60), app.center!!.name))
+            retVal.add(AppointmentFullDTO(app.time,Date(
+                app.time.time+1000*60*60),
+                (app.donor?.name ?: "Empty") + " " +
+                     (app.donor?.surname ?: "term") + "@" +
+                      (app.center?.name ?: "ERR"),
+                resource = app.center!!.name))
         }
         return retVal
     }

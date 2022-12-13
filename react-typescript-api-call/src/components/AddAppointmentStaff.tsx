@@ -15,6 +15,7 @@ const localizer = momentLocalizer(moment)
 
 export default function AddAppointmentStaff() {
     var i = 1;
+
     interface Centers {
         center: {
             name: string
@@ -24,20 +25,12 @@ export default function AddAppointmentStaff() {
         }[]
     }
 
-    const [events, setEvents] = useState<Event[]>([
-        // {
-        //     title: 'Learn cool stuff',
-        //     start: new Date(0),
-        //     end: new Date(0)
-        // },
-    ])
+    const [events, setEvents] = useState<Event[]>([])
 
     const [appointment, setAppointment] = useState({
         centerName: "",
         date: ""
     })
-
-    // const [appointments, setAppointments] = useState<Appointments["event"]>();
 
     const [centers, setCenters] = useState<Centers["center"]>();
 
@@ -50,6 +43,10 @@ export default function AddAppointmentStaff() {
 
     const handleScheduleAppointment = () => {
         //console.log(appointment)
+        if (appointment.centerName === "" || appointment.date === "") {
+            alert("Select all data!");
+            return
+        }
         AppointmentService.scheduleAppointment(appointment).
             then((response) => {
                 if (response.data === "") alert("Appointment not available at designated time!")
@@ -89,7 +86,17 @@ export default function AddAppointmentStaff() {
         AppointmentService.findAppointmentsAdmin().
             then((response) => {
                 console.log(response.data);
-                setEvents(response.data)
+                const evs: React.SetStateAction<Event[]> | { allDay: boolean; title: any; start: Date; end: Date; resource: any; }[] = [];
+                response.data.forEach((element: any) => {
+                    evs.push({
+                        allDay: false,
+                        title: element.title,
+                        start: new Date(element.start),
+                        end: new Date(element.start),
+                        resource: element.title,
+                    })
+                })
+                setEvents(evs)
             })
             .catch((error) => {
                 console.log(error);
