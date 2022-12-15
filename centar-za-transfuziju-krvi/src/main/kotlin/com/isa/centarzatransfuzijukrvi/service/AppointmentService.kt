@@ -61,7 +61,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         for(center in centers){
             val end = Date(start.time+1000*60*60)
             val appointment = findAppointmentsWithoutUser(start,end,center.name)
-            if(appointment.id !=0){
+            if(appointment!=null){
                 if(appointment.id==-1){
                     retVal.add(AppointmentCenterUserDTO(center.name,center.address,start,end))
                 }else{
@@ -72,21 +72,24 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         return retVal
     }
 
-    fun findAppointmentsWithoutUser(start: Date, end: Date, centerName: String): Appointment{
+    fun findAppointmentsWithoutUser(start: Date, end: Date, centerName: String): Appointment?{
         val allAppointments = appointmentRepository.findAll()
         for(scheduled in allAppointments){
             val endTime = Date(scheduled.time.time+1000*60*60-1)
             if(scheduled.center?.name.equals(centerName)){
-                println("FIRST " + start.toString() + '<' + scheduled.time.toString() + "<" + end.toString() + "is " + (scheduled.time > start && scheduled.time < end))
-                println("SECOND " + start.toString() + '<' + endTime.toString() + "<" + end.toString() + "is " + (endTime > start && endTime < end))
+//                println("FIRST " + start.toString() + " < " + scheduled.time.toString() + "<" + end.toString() + " is " + (scheduled.time > start && scheduled.time < end))
+//                println("SECOND " + start.toString() + " < " + endTime.toString() + "<" + end.toString() + " is " + (endTime > start && endTime < end))
                 if(((scheduled.time >= start && scheduled.time < end) || (endTime > start && endTime < end))) {
-                    if (scheduled.donor != null) {
-                        return scheduled;
+                    println("DONOR ID:" + (scheduled.donor?.id ?: "NONE"))
+                    if (scheduled.donor == null) {
+                        return scheduled;//APPOINTMENT SCHEDULED AND DOES NOT HAVE USER
                     }
-                    return Appointment(0, time = Date(), null, null, null);
+                    else{
+                        return null;//APPOINTMENT SCHEDULED AND HAS USER
+                    }
                 }
             }
         }
-        return Appointment(-1, time = Date(),null,null,null);
+        return Appointment(-1, time = Date(),null,null,null);//APPOINTMENT DOES NOT EXIST
     }
 }
