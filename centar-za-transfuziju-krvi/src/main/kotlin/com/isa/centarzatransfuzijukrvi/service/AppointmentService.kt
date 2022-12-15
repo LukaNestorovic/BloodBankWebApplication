@@ -1,7 +1,9 @@
 package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
+import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
 import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
@@ -50,5 +52,20 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
                 resource = app.center!!.name))
         }
         return retVal
+    }
+
+    fun findAllEmptyAppointments() : List<AppointmentDTO> {
+        var termini: ArrayList<AppointmentDTO> = ArrayList()
+        for(app in appointmentRepository.findAll()){
+            if(app.donor == null)
+                termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
+        }
+        return termini
+    }
+
+    fun updateAppointment(id: Int, pacijent: RegisteredUser) : Appointment {
+        val termin : Appointment = appointmentRepository.getReferenceById(id)
+        termin.donor = pacijent
+        return termin
     }
 }

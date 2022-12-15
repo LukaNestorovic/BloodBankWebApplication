@@ -83,7 +83,7 @@ export default function Register() {
             UserService.saveUser(user)
                 .then((response) => {
                     console.log(response);
-                    localStorage.setItem("email", response.data.email)
+//                    localStorage.setItem("email", response.data.email)
                     navigate("/profile");
                 })
                 .catch((error) => {
