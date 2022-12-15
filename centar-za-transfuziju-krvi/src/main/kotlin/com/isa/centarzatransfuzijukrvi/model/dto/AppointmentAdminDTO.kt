@@ -4,5 +4,5 @@ import java.util.Date
 
 data class AppointmentAdminDTO(
     val date: Date,
-    val centerId: Int
+    val centerName: String
 )

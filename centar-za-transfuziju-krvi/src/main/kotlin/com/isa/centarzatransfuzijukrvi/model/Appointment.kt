@@ -19,7 +19,7 @@ data class Appointment(
     @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="center_id", referencedColumnName = "id")
-    val center: Center,
+    val center: Center?,
     @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
