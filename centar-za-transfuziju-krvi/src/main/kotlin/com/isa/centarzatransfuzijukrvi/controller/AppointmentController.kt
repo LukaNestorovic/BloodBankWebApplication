@@ -1,14 +1,18 @@
 package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
+import com.isa.centarzatransfuzijukrvi.model.Center
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentCenterUserDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentSearchUserDTO
 import com.isa.centarzatransfuzijukrvi.service.AppointmentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping(path = ["api"])
@@ -24,4 +28,8 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     @GetMapping(path=["appointment/admin"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllAdmin(): ResponseEntity<List<AppointmentFullDTO>?> = ResponseEntity(appointmentService.findAll(),HttpStatus.OK)
 
+    @PostMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun queryAppointments(@RequestBody query : AppointmentSearchUserDTO) : ResponseEntity<List<AppointmentCenterUserDTO>>{
+        return ResponseEntity(appointmentService.findCentersFreeAtTime(query.date),HttpStatus.OK)
+    }
 }
