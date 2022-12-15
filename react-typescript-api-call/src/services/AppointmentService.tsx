@@ -12,8 +12,8 @@ class AppointmentService {
     findAppointments(){
         return axios.get(API_BASE_URL + "appointments")
     }
-    updateAppointment(id: any, email: any) {
-        return axios.put(API_BASE_URL + "appointment/" + id, email)
+    updateAppointment(data:any) {
+        return axios.put(API_BASE_URL + "appointment", data)
     }
 }
 

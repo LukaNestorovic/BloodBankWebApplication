@@ -8,11 +8,14 @@ const Appointment = ({appointment}) => {
 
     var donor = localStorage.getItem("email")
 
-
+    const [dto, setDto] = useState({
+        id: appointment.id,
+        email: donor
+    })
 
     const update = (e: any) => {
         e.preventDefault();
-        AppointmentService.updateAppointment(appointment.id, donor)
+        AppointmentService.updateAppointment(dto)
             .then((response) => {
                 console.log(response);
                 alert("Successfully saved user data!");

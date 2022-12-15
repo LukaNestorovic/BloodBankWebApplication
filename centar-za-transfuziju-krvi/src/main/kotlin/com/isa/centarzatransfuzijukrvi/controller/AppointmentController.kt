@@ -30,11 +30,11 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     @GetMapping(path = ["/appointments"],produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllAppointments(): ResponseEntity<List<AppointmentDTO>> = ResponseEntity(appointmentService.findAllEmptyAppointments(), HttpStatus.OK)
 
-    @PutMapping(path = ["/appointment/{id}"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun updateAppointment(@PathVariable id: Int, @RequestBody email : String) : ResponseEntity<Appointment> {
-        var pacijent = registeredUserService.findByEmail(email)
-        println(email)
-        var povratna = appointmentService.updateAppointment(id, pacijent)
+    @PutMapping(path = ["/appointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun updateAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment> {
+        var pacijent = registeredUserService.findByEmail(dto.email)
+        println(dto.email)
+        var povratna = appointmentService.updateAppointment(dto.id, pacijent)
         return ResponseEntity(povratna, HttpStatus.ACCEPTED)
     }
 
