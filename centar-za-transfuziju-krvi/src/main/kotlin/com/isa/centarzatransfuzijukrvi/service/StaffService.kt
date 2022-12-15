@@ -18,4 +18,5 @@ class StaffService(val staffRepository: StaffRepository) {
 //                              staff.password,
 //                              staff.role,
 //                              staff.reports))
+    fun findAll(): List<Staff> = staffRepository.findAll()
 }

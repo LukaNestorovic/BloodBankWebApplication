@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(path = ["api"])
 @CrossOrigin(origins=["*"])
 class AppointmentController(@Autowired val appointmentService: AppointmentService) {
+
     @PostMapping(path=["appointment/admin"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createAdmin(@RequestBody unscheduledAppointment : AppointmentAdminDTO) : ResponseEntity<Appointment>{
         //println("REQUEST:" + unscheduledAppointment.centerName.toString() + " DATE:" + unscheduledAppointment.date.toString())

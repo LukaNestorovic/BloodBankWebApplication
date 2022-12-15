@@ -7,6 +7,7 @@ import com.isa.centarzatransfuzijukrvi.repository.LoyaltyRepository
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredUserRepository,
@@ -30,4 +31,8 @@ class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredU
     }
 
     fun findByEmail(email: String) : RegisteredUser = registeredUserRepository.findOneByEmail(email)
+
+    fun findAll(): List<RegisteredUser> = registeredUserRepository.findAll()
+
+    fun findById(id: Int) : Optional<RegisteredUser> = registeredUserRepository.findById(id)
 }

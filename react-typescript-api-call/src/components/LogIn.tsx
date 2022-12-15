@@ -16,6 +16,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import UserService from "../services/UserService";
 
 interface State {
     password: string;
@@ -34,6 +35,12 @@ export default function LogIn() {
     const[password, setPassword] = useState("")
     const navigate = useNavigate()
 
+    const [user, setUser] = useState({
+        id: "",
+        email: "",
+        password: ""
+    });
+
 
     const handleChange =
         (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,18 +57,48 @@ export default function LogIn() {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+
+    function sendLoginRequest() {
+        const reqBody = {
+            email: email,
+            password: password
+        }
+    }
+
+    const handleChange1 = (e:any) => {
+        const value = e.target.value;
+        setUser({ ...user, [e.target.name]: value });
+    };
+
+    const saveUser = (e:any) => {
+        e.preventDefault();
+        UserService.logIn(user)
+            .then((response) => {
+                console.log(response);
+                localStorage.setItem("email", response.data.email);
+                localStorage.setItem("role", response.data.role)
+                navigate("/donorform");
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Wrong email or password");
+
+            });
+    };
+
     return (
         <Container>
                     <Stack direction="column" spacing={1}>
                         <h1 style={{alignSelf:'center'}}>LogIn</h1>
-                        <TextField id="outlined-basic" label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} value={email}/>
+                        <TextField id="outlined-basic" label="Email" variant="filled" style={{width:'60ch', alignSelf:'center'}} value={email} onChange={(e) => {setEmail(e.target.value); handleChange1(e)}} name="email"/>
                         <FormControl variant="filled" style={{width:'60ch', alignSelf:'center'}}>
                         <InputLabel htmlFor="filled-adornment-password" >Password</InputLabel>
                         <FilledInput
                         id="filled-adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
-                        value={values.password}
-                        onChange={handleChange('password')}
+                        value={password}
+                        name="password"
+                        onChange={e => {handleChange('password'); setPassword(e.target.value); handleChange1(e)}}
                         endAdornment={
                             <InputAdornment position="end" >
                                 <IconButton
@@ -76,7 +113,7 @@ export default function LogIn() {
                         }
                     />
                 </FormControl>
-                        <Button variant="contained" style={{width:200, alignSelf:'center'}}>LogIn</Button>
+                        <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={saveUser}>LogIn</Button>
                         <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/register")}>Register</Button>
                         <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/global-centers")}>Centers</Button>
                     </Stack>
