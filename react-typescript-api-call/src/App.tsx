@@ -7,7 +7,6 @@ import UpdateProfile from "./components/UpdateProfile"
 import GlobalCenters from "./components/GlobalCenters"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Questionnaire from "./components/Questionnaire";
-import AddAppointmentStaff from './components/AddAppointmentStaff';
 import DonorForm                      from "./components/DonorForm";
 import AddAppointmentStaff from './components/AddAppointmentStaff';
 
