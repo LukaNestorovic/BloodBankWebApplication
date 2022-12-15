@@ -63,9 +63,9 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             val appointment = findAppointmentsWithoutUser(start,end,center.name)
             if(appointment!=null){
                 if(appointment.id==-1){
-                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,start,end))
+                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,start.toString(),end.toString()))
                 }else{
-                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,appointment.time,Date(appointment.time.time+1000*60*60)))
+                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,appointment.time.toString(),Date(appointment.time.time+1000*60*60).toString()))
                 }
             }
         }

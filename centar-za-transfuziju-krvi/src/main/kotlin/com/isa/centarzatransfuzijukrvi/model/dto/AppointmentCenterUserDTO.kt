@@ -6,6 +6,6 @@ import java.util.*
 data class AppointmentCenterUserDTO(
     val name: String,
     val address: String,
-    val start: Date,
-    val end: Date,
+    val start: String,
+    val end: String,
 )
