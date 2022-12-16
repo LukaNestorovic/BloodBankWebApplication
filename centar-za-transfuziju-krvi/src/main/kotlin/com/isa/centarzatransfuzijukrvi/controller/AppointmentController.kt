@@ -27,7 +27,7 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
 
     @PostMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun queryAppointments(@RequestBody query : AppointmentSearchUserDTO) : ResponseEntity<List<AppointmentCenterUserDTO>>{
-        return ResponseEntity(appointmentService.findCentersFreeAtTime(query.date),HttpStatus.OK)
+        return ResponseEntity(appointmentService.findCentersFreeAtTime(query),HttpStatus.OK)
     }
     @PutMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun enrollAppointment(@RequestBody enroll : AppointmentEnrollDTO) : ResponseEntity<Appointment>{

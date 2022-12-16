@@ -5,6 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import React from "react"
 import { useState } from "react"
 import AppointmentService from "../services/AppointmentService"
+import DonorForm from "./DonorForm"
 
 export default function SearchAppointmentsUser() {
     interface Appointments {
@@ -17,7 +18,8 @@ export default function SearchAppointmentsUser() {
         }[]
     }
     interface Query {
-        date: string
+        date: string,
+        email: string
     }
     interface Enroll {
         date: string,
@@ -28,13 +30,20 @@ export default function SearchAppointmentsUser() {
     const [appointments, setAppointments] = useState<Appointments["appointment"]>();
 
     const [query, setQuery] = useState<Query>({
-        date: ""
+        date: "",
+        email: "",
     });
+
+    const [showDonorForm, setShowDonorForm] = useState(false)
 
     const handleQuery = () => {
         AppointmentService.findAppointmentsUser(query).
             then((response) => {
                 console.log(response.data);
+                if (response.data[0].name == "NOTAVA") {
+                    alert("6 MONTHS HASNT PASSED!")
+                    return;
+                }
                 const available: Appointments["appointment"] = [];
                 response.data.forEach((element: any) => {
                     available.push({
@@ -46,6 +55,7 @@ export default function SearchAppointmentsUser() {
                     })
                 })
                 setAppointments(available)
+                setShowDonorForm(true)
             })
             .catch((error) => {
                 console.log(error);
@@ -69,6 +79,8 @@ export default function SearchAppointmentsUser() {
         AppointmentService.enrollAppointmentsUser(toSchedule).
             then((response) => {
                 console.log(response.data);
+                alert("Successfully reserved appointment");
+                window.location.reload()
             })
             .catch((error) => {
                 console.log(error);
@@ -93,12 +105,14 @@ export default function SearchAppointmentsUser() {
                         label="Date and Time"
                         value={query.date}
                         onChange={(newValue) => setQuery({
-                            date: newValue
+                            date: newValue,
+                            email: localStorage.getItem("email")
                         })}
                     />
                 </LocalizationProvider>
                 <Button variant="contained" onClick={handleQuery} style={{ width: 200, alignSelf: 'center' }}>Search</Button>
             </Stack>
+            {showDonorForm ? <DonorForm /> : null}
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650, maxWidth: 1250, margin: "auto" }} aria-label="simple table">
                     <TableHead>
@@ -127,6 +141,6 @@ export default function SearchAppointmentsUser() {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </Container>
+        </Container >
     )
 }

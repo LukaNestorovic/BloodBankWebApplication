@@ -2,10 +2,7 @@ package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
 import com.isa.centarzatransfuzijukrvi.model.Center
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentCenterUserDTO
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentEnrollDTO
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.*
 import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
@@ -60,16 +57,25 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         return retVal
     }
 
-    fun findCentersFreeAtTime(start:Date): List<AppointmentCenterUserDTO>{
-        val df: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+    fun findCentersFreeAtTime(query: AppointmentSearchUserDTO): List<AppointmentCenterUserDTO>{
         var retVal: ArrayList<AppointmentCenterUserDTO> = ArrayList()
+        val apps = appointmentRepository.findAll()
+        for(app in apps){
+            if(app.donor!=null){
+                if(app.donor!!.email.equals(query.email) && Date(app.time.time+1000*60*60*24*60)>query.date){
+                    retVal.add(AppointmentCenterUserDTO("NOTAVA","NOTAVA","NOTAVA","NOTAVA",-1))
+                    return retVal
+                }
+            }
+        }
+        val df: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
         val centers = centerRepository.findAll()
         for(center in centers){
-            val end = Date(start.time+1000*60*60)
-            val appointment = findAppointmentsWithoutUser(start,end,center.name)
+            val end = Date(query.date.time+1000*60*60)
+            val appointment = findAppointmentsWithoutUser(query.date,end,center.name)
             if(appointment!=null){
                 if(appointment.id==-1){
-                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(start),df.format(end),-1))
+                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(query.date),df.format(end),-1))
                 }else{
                     retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(appointment.time),df.format(Date(appointment.time.time+1000*60*60)),
                         appointment.id!!
