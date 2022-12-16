@@ -4,16 +4,21 @@ import com.isa.centarzatransfuzijukrvi.model.Appointment
 import com.isa.centarzatransfuzijukrvi.model.Center
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentCenterUserDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentEnrollDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
 import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
+import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
 import org.hibernate.type.PrimitiveCharacterArrayNClobType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.Date
 
 @Service
-class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository) {
+class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository,
+                         @Autowired val userRepository: RegisteredUserRepository) {
     fun create(toSchedule: AppointmentAdminDTO) : Appointment?{
         val center = centerRepository.findByName(toSchedule.centerName).get()
         val endDate = Date(toSchedule.date.time+1000*60*60)
@@ -56,6 +61,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
     }
 
     fun findCentersFreeAtTime(start:Date): List<AppointmentCenterUserDTO>{
+        val df: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
         var retVal: ArrayList<AppointmentCenterUserDTO> = ArrayList()
         val centers = centerRepository.findAll()
         for(center in centers){
@@ -63,9 +69,11 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             val appointment = findAppointmentsWithoutUser(start,end,center.name)
             if(appointment!=null){
                 if(appointment.id==-1){
-                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,start.toString(),end.toString()))
+                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(start),df.format(end),-1))
                 }else{
-                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,appointment.time.toString(),Date(appointment.time.time+1000*60*60).toString()))
+                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(appointment.time),df.format(Date(appointment.time.time+1000*60*60)),
+                        appointment.id!!
+                    ))
                 }
             }
         }
@@ -91,5 +99,18 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             }
         }
         return Appointment(-1, time = Date(),null,null,null);//APPOINTMENT DOES NOT EXIST
+    }
+
+    fun enrollAppointment(enroll: AppointmentEnrollDTO) : Appointment{
+        val df: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val user = userRepository.findOneByEmail(enroll.email)
+        println("APP ID:" + enroll.appId)
+        val appId = Integer.parseInt(enroll.appId)
+        if(appId!=-1){
+            var appointment = appointmentRepository.findById(appId).get()
+            appointment.donor = user
+            return appointmentRepository.save(appointment)
+        }
+        return appointmentRepository.save(Appointment(null,df.parse(enroll.date),user,centerRepository.findByName(enroll.center).get(),null))
     }
 }

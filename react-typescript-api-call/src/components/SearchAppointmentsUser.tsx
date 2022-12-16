@@ -12,13 +12,19 @@ export default function SearchAppointmentsUser() {
             name: string
             address: string
             start: string
-            end: string
+            end: string,
+            appId: number
         }[]
     }
     interface Query {
         date: string
     }
-
+    interface Enroll {
+        date: string,
+        center: string,
+        email: string,
+        appId: string
+    }
     const [appointments, setAppointments] = useState<Appointments["appointment"]>();
 
     const [query, setQuery] = useState<Query>({
@@ -34,8 +40,9 @@ export default function SearchAppointmentsUser() {
                     available.push({
                         name: element.name,
                         address: element.address,
-                        start: element.start.substring(0, 10).concat(" ", element.start.substring(11, 19)),
-                        end: element.end.substring(0, 10).concat(" ", element.end.substring(11, 19)),
+                        start: element.start,//.substring(0, 10).concat(" ", element.start.substring(11, 19)),
+                        end: element.end,//.substring(0, 10).concat(" ", element.end.substring(11, 19)),
+                        appId: element.appId
                     })
                 })
                 setAppointments(available)
@@ -45,15 +52,29 @@ export default function SearchAppointmentsUser() {
             });
     }
     const handleSchedule = (e: any) => {
-        // AppointmentService.findAppointmentsUser(query).
-        //     then((response) => {
-        //         console.log(response.data);
-        //         setAppointments(response.data)
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
-        console.log(JSON.stringify(e.currentTarget.getAttribute("button-data")))
+        // console.log(JSON.stringify(e.currentTarget.getAttribute("button-data")))
+        const appData = JSON.stringify(e.currentTarget.getAttribute("button-data")).split(",", 3)
+        var storageMail = localStorage.getItem("email")
+        console.log(appData)
+
+        const toSchedule: Enroll = {
+            date: appData[1],
+            center: appData[0].substring(1),
+            email: storageMail,
+            appId: appData[2].slice(0, -1)
+        }
+
+        console.log(toSchedule)
+
+        AppointmentService.enrollAppointmentsUser(toSchedule).
+            then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+
     }
 
     return (
@@ -99,7 +120,7 @@ export default function SearchAppointmentsUser() {
                                 <TableCell align="right">{row.address}</TableCell>
                                 <TableCell align="right">{row.start}</TableCell>
                                 <TableCell align="right">{row.end}</TableCell>
-                                <TableCell align="right"><Button button-data={[row.address, row.start]} variant="contained" onClick={handleSchedule} style={{ alignSelf: 'right' }}>Reserve</Button></TableCell>
+                                <TableCell align="right"><Button button-data={[row.name, row.start, row.appId]} variant="contained" onClick={handleSchedule} style={{ alignSelf: 'right' }}>Reserve</Button></TableCell>
 
                             </TableRow>
                         ))}

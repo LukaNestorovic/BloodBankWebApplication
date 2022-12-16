@@ -8,4 +8,5 @@ data class AppointmentCenterUserDTO(
     val address: String,
     val start: String,
     val end: String,
+    val appId: Int
 )

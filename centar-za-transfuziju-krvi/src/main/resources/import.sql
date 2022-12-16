@@ -15,3 +15,4 @@ insert into rating(id,room_rating,staff_rating,hospitality_rating,location_ratin
 insert into appointment(id,time,center_id,doctor_id,user_id) values (1,"2022-12-20 10:00:00",1,1,1)
 insert into appointment(id,time,center_id,doctor_id,user_id) values (2,"2022-12-20 11:00:00",1,1,2)
 insert into appointment(id,time,center_id,doctor_id,user_id) values (3,"2022-12-20 11:00:00",2,1,2)
+insert into appointment(id,time,center_id,doctor_id,user_id) values (4,"2022-12-20 11:00:00",3,null,null);
