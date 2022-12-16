@@ -6,8 +6,9 @@ class AppointmentService {
     scheduleAppointment(data: any) {
         return axios.post(API_BASE_URL + "appointment/admin", data)
     }
-    findAppointmentsAdmin() {
-        return axios.get(API_BASE_URL + "appointment/admin")
+    findAppointmentsAdmin(data: any) {
+        console.log(data)
+        return axios.put(API_BASE_URL + "appointment/admin", data)
     }
     findAppointmentsUser(data: any) {
         return axios.post(API_BASE_URL + "appointment/user", data)

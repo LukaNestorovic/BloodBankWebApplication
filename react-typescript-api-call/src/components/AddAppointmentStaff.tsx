@@ -72,7 +72,8 @@ export default function AddAppointmentStaff() {
     }, []);
 
     const refreshCalendar = () => {
-        AppointmentService.findAppointmentsAdmin().
+        console.log({ email: localStorage.getItem("email") })
+        AppointmentService.findAppointmentsAdmin({ email: localStorage.getItem("email") }).
             then((response) => {
                 console.log(response.data);
                 const evs: React.SetStateAction<Event[]> | { allDay: boolean; title: any; start: Date; end: Date; resource: any; }[] = [];

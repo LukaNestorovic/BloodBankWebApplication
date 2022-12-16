@@ -43,16 +43,18 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         return null;
     }
 
-    fun findAll() : List<AppointmentFullDTO>? {
+    fun findAll(email: String) : List<AppointmentFullDTO>? {
         var retVal: ArrayList<AppointmentFullDTO> = ArrayList()
         for(app in appointmentRepository.findAll()){
-            println("FOUND 1")
-            retVal.add(AppointmentFullDTO(app.time,Date(
-                app.time.time+1000*60*60),
-                (app.donor?.name ?: "Empty") + " " +
-                     (app.donor?.surname ?: "term") + "@" +
-                      (app.center?.name ?: "ERR"),
-                resource = app.center!!.name))
+            println("MAIL:" + app.doctor?.email + " " + email)
+            if(app.doctor?.email.equals(email)){
+                retVal.add(AppointmentFullDTO(app.time,Date(
+                    app.time.time+1000*60*60),
+                    (app.donor?.name ?: "Empty") + " " +
+                            (app.donor?.surname ?: "term") + "@" +
+                            (app.center?.name ?: "ERR"),
+                    resource = app.center!!.name))
+            }
         }
         return retVal
     }
