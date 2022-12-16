@@ -1,7 +1,6 @@
 import React, {useState}     from "react";
 import {TableCell, TableRow} from "@mui/material";
 import AppointmentService    from "../services/AppointmentService";
-import UserService           from "../services/UserService";
 
 // @ts-ignore
 const Appointment = ({appointment}) => {
@@ -18,7 +17,6 @@ const Appointment = ({appointment}) => {
         AppointmentService.updateAppointment(dto)
             .then((response) => {
                 console.log(response);
-                alert("Successfully saved user data!");
                 window.location.reload();
         }).catch((error) => {
             console.log(donor)

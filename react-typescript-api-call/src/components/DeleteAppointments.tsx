@@ -3,7 +3,8 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 import Appointment                                                                               from "./Appointment"
 import AppointmentService                                                                        from "../services/AppointmentService";
 
-export default function Appointments(){
+export default function DeleteAppointments(){
+
 
     const [loading, setLoading] = useState(true);
     const [appointments, setAppointments] = useState(null);
@@ -12,7 +13,7 @@ export default function Appointments(){
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await AppointmentService.findAppointments();
+                const response = await AppointmentService.findScheduledAppointment();
                 setAppointments(response.data);
             } catch (error) {
                 console.log(error);
@@ -40,14 +41,14 @@ export default function Appointments(){
                             Center</TableCell>
                         <TableCell align={"center"}>Doctor</TableCell>
                         <TableCell align={"center"} >
-                           Schedule
+                            Delete
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 {!loading && (
                     <TableBody>
                         {appointments.map((appointment:any) => (
-                               <Appointment
+                            <Appointment
                                 appointment={appointment}
                                 key={appointment.id}/>
                         ))}

@@ -15,6 +15,9 @@ class AppointmentService {
     updateAppointment(data:any) {
         return axios.put(API_BASE_URL + "appointment", data)
     }
+    findScheduledAppointment(){
+        return axios.get(API_BASE_URL + "scheduledappointment")
+    }
 }
 
 export default new AppointmentService();

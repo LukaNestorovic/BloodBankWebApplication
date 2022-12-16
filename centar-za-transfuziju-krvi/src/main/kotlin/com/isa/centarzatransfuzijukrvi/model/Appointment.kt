@@ -24,4 +24,8 @@ data class Appointment(
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     val doctor: Staff?
-)
+){
+    fun updateAppointment(user: RegisteredUser){
+        this.donor = user
+    }
+}

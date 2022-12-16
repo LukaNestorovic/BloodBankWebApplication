@@ -34,8 +34,10 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     fun updateAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment> {
         var pacijent = registeredUserService.findByEmail(dto.email)
         println(dto.email)
+        println(dto.id)
         var povratna = appointmentService.updateAppointment(dto.id, pacijent)
-        return ResponseEntity(povratna, HttpStatus.ACCEPTED)
+        println(povratna.donor!!.id)
+        return ResponseEntity(povratna, HttpStatus.OK)
     }
 
 }

@@ -9,7 +9,8 @@ import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.Date
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Service
 class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository) {
@@ -64,8 +65,8 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
     }
 
     fun updateAppointment(id: Int, pacijent: RegisteredUser) : Appointment {
-        val termin : Appointment = appointmentRepository.getReferenceById(id)
-        termin.donor = pacijent
-        return termin
+        val termin = appointmentRepository.findById(id)
+        termin.get().updateAppointment(pacijent)
+        return appointmentRepository.save(termin.get())
     }
 }
