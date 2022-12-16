@@ -1,4 +1,4 @@
-import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material"
+import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, TextField } from "@mui/material"
 import { Container } from "@mui/system"
 import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
@@ -14,7 +14,8 @@ export default function SearchAppointmentsUser() {
             address: string
             start: string
             end: string,
-            appId: number
+            appId: number,
+            rating: number
         }[]
     }
     interface Query {
@@ -51,7 +52,8 @@ export default function SearchAppointmentsUser() {
                         address: element.address,
                         start: element.start,//.substring(0, 10).concat(" ", element.start.substring(11, 19)),
                         end: element.end,//.substring(0, 10).concat(" ", element.end.substring(11, 19)),
-                        appId: element.appId
+                        appId: element.appId,
+                        rating: element.rating
                     })
                 })
                 setAppointments(available)
@@ -89,6 +91,26 @@ export default function SearchAppointmentsUser() {
 
     }
 
+    const [sortDirection, setSortDirection] = useState("asc")
+
+    const sortApps = (apps: any, orderBy: any) => {
+        switch (orderBy) {
+            case "asc":
+                return apps.sort((a: any, b: any) =>
+                    a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0
+                );
+            case "desc":
+                return apps.sort((a: any, b: any) =>
+                    a.rating < b.rating ? 1 : b.rating < a.rating ? -1 : 0
+                );
+        }
+    };
+
+    const handleSort = () => {
+        sortApps(appointments, sortDirection)
+        setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    }
+
     return (
         <Container>
             <Stack direction="column"
@@ -121,6 +143,8 @@ export default function SearchAppointmentsUser() {
                             <TableCell align="right">Address</TableCell>
                             <TableCell align="right">Start</TableCell>
                             <TableCell align="right">End</TableCell>
+                            <TableCell align={"right"} onClick={handleSort}><TableSortLabel direction={sortDirection == "asc" ? "desc" : "asc"}>
+                                Rating</TableSortLabel></TableCell>
                             <TableCell align="right">Reserve</TableCell>
                         </TableRow>
                     </TableHead>
@@ -134,6 +158,7 @@ export default function SearchAppointmentsUser() {
                                 <TableCell align="right">{row.address}</TableCell>
                                 <TableCell align="right">{row.start}</TableCell>
                                 <TableCell align="right">{row.end}</TableCell>
+                                <TableCell align="right">{row.rating}</TableCell>
                                 <TableCell align="right"><Button button-data={[row.name, row.start, row.appId]} variant="contained" onClick={handleSchedule} style={{ alignSelf: 'right' }}>Reserve</Button></TableCell>
 
                             </TableRow>

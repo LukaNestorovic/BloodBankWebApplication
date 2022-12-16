@@ -63,7 +63,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         for(app in apps){
             if(app.donor!=null){
                 if(app.donor!!.email.equals(query.email) && Date(app.time.time+1000*60*60*24*60)>query.date){
-                    retVal.add(AppointmentCenterUserDTO("NOTAVA","NOTAVA","NOTAVA","NOTAVA",-1))
+                    retVal.add(AppointmentCenterUserDTO("NOTAVA","NOTAVA","NOTAVA","NOTAVA",-1,-1.0))
                     return retVal
                 }
             }
@@ -75,10 +75,10 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             val appointment = findAppointmentsWithoutUser(query.date,end,center.name)
             if(appointment!=null){
                 if(appointment.id==-1){
-                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(query.date),df.format(end),-1))
+                    retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(query.date),df.format(end),-1,center.rating))
                 }else{
                     retVal.add(AppointmentCenterUserDTO(center.name,center.address,df.format(appointment.time),df.format(Date(appointment.time.time+1000*60*60)),
-                        appointment.id!!
+                        appointment.id!!, center.rating
                     ))
                 }
             }
