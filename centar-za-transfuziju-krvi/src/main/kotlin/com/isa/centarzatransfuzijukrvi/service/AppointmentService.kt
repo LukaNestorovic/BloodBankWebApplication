@@ -94,7 +94,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
 //                println("FIRST " + start.toString() + " < " + scheduled.time.toString() + "<" + end.toString() + " is " + (scheduled.time > start && scheduled.time < end))
 //                println("SECOND " + start.toString() + " < " + endTime.toString() + "<" + end.toString() + " is " + (endTime > start && endTime < end))
                 if(((scheduled.time >= start && scheduled.time < end) || (endTime > start && endTime < end))) {
-                    println("DONOR ID:" + (scheduled.donor?.id ?: "NONE"))
+//                    println("DONOR ID:" + (scheduled.donor?.id ?: "NONE"))
                     if (scheduled.donor == null) {
                         return scheduled;//APPOINTMENT SCHEDULED AND DOES NOT HAVE USER
                     }
