@@ -5,7 +5,7 @@ insert into center(id,description,name,rating,address) values (4,"Not the best b
 insert into center(id,description,name,rating,address) values (5,"Certainly not the best bank","Blood",2,"Narodnih heroja 4")
 insert into loyalty values (1,"Very good benefits","Very good category",5)
 insert into loyalty values (2,"Almost good benefits","Almost good category",3)
-insert into registered_user values(1,"Milenka Grcica 2","0-","Novi Sad","Serbia","email@email.com","M","Info","1234567890123","Imenko","Engineer","123456","0063111222","user","Prezimic",1)
+insert into registered_user values(1,"Milenka Grcica 2","0-","Novi Sad","Serbia","ristic.in30.2019@uns.ac.rs","M","Info","1234567890123","Imenko","Engineer","123456","0063111222","user","Prezimic",1)
 insert into registered_user values(2,"Milenka Grcica 20","0+","Novi Sad","Serbia","gmail@gmail.com","M","Info2","1234567890124","Imenkoo","SW Engineer","12389456","0063111333","user","Prezimicic",2)
 insert into staff(id,name,surname,gender,email,password,role,address,city,country,phone,jmbg) values (1,"Zvonko","Zvonkic","M","zvonko@mail.com","sifra","Doctor","Partizanska 5","Beograd","Serbia","011311311","0987654321123")
 insert into staff(id,name,surname,gender,email,password,role,address,city,country,phone,jmbg) values (2,"Mile","Milic","M","mile@mail.com","sifra","Doctor","Evropska 29","Beograd","Serbia","011312311","0987654321121")

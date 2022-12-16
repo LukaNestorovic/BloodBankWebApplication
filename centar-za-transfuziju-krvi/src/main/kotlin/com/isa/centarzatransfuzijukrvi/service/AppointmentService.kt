@@ -15,7 +15,7 @@ import java.util.Date
 
 @Service
 class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository,
-                         @Autowired val userRepository: RegisteredUserRepository) {
+                         @Autowired val userRepository: RegisteredUserRepository, @Autowired val emailService: EmailService) {
     fun create(toSchedule: AppointmentAdminDTO) : Appointment?{
         val center = centerRepository.findByName(toSchedule.centerName).get()
         val endDate = Date(toSchedule.date.time+1000*60*60)
@@ -115,8 +115,10 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         if(appId!=-1){
             var appointment = appointmentRepository.findById(appId).get()
             appointment.donor = user
+            emailService.sendEmail("Reservation","Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date, user.email)
             return appointmentRepository.save(appointment)
         }
+        emailService.sendEmail("Reservation","Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date, user.email)
         return appointmentRepository.save(Appointment(null,df.parse(enroll.date),user,centerRepository.findByName(enroll.center).get(),null))
     }
 }
