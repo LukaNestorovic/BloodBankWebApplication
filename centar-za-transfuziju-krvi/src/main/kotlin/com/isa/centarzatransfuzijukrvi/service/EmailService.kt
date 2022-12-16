@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper
 class EmailService(
     private val mailSender: JavaMailSender
 ) {
-    fun sendEmail(subject: String, body: String, targetEmail: String){
+    fun sendEmail(subject: String, body: String, targetEmail: String) : String{
         val message = SimpleMailMessage()
 
         message.setSubject(subject)
@@ -18,6 +18,7 @@ class EmailService(
         message.setTo(targetEmail)
 
         mailSender.send(message)
+        return ("Mail sent")
     }
 
 

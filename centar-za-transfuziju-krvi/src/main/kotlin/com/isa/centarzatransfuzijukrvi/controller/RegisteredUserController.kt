@@ -3,6 +3,7 @@ package com.isa.centarzatransfuzijukrvi.controller
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.model.Staff
 import com.isa.centarzatransfuzijukrvi.model.SysAdmin
+import com.isa.centarzatransfuzijukrvi.model.dto.DeleteDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDTO2
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDto
 import com.isa.centarzatransfuzijukrvi.service.RegisteredUserService
@@ -88,5 +89,11 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
     fun getRegisteredUser(@PathVariable("userId") userId: Int) : ResponseEntity<Optional<RegisteredUser>> {
         val registeredUser: Optional<RegisteredUser> = registeredUserService.findById(userId)
         return ResponseEntity(registeredUser, HttpStatus.OK)
+    }
+
+    @PutMapping(path = ["/enable"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun setEnable(@RequestBody dto: DeleteDTO) : ResponseEntity<RegisteredUser> {
+        var povratna = registeredUserService.setEnable(dto.email)
+        return ResponseEntity(povratna, HttpStatus.OK)
     }
 }

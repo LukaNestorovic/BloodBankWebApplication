@@ -10,6 +10,7 @@ import DonorForm from "./components/DonorForm";
 import AddAppointmentStaff from './components/AddAppointmentStaff';
 import Appointments       from "./components/Appointments"
 import DeleteAppointments from "./components/DeleteAppointments";
+import Success            from "./components/Success";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/appointment/staff" element={<AddAppointmentStaff />} />
           <Route path="/appointments" element={<Appointments />} />
           <Route path="/scheduledappointments" element={<DeleteAppointments />} />
+          <Route path="/success" element={<Success />} />
         </Routes>
       </BrowserRouter>
     </>
