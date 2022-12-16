@@ -9,6 +9,12 @@ class AppointmentService {
     findAppointmentsAdmin() {
         return axios.get(API_BASE_URL + "appointment/admin")
     }
+    findAppointmentsUser(data: any) {
+        return axios.post(API_BASE_URL + "appointment/user", data)
+    }
+    enrollAppointmentsUser(data: any) {
+        return axios.put(API_BASE_URL + "appointment/user", data)
+    }
 }
 
 export default new AppointmentService();

@@ -15,7 +15,7 @@ data class Appointment(
     @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="user_id", referencedColumnName = "id")
-    val donor: RegisteredUser?,
+    var donor: RegisteredUser?,
     @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="center_id", referencedColumnName = "id")
