@@ -77,7 +77,10 @@ export default function LogIn() {
                 console.log(response);
                 localStorage.setItem("email", response.data.email);
                 localStorage.setItem("role", response.data.role)
-                navigate("/donorform");
+                localStorage.setItem("enable", response.data.enable)
+                if(localStorage.getItem("role") == "user")
+                    navigate("/donorform");
+                else navigate("/global-centers")
             })
             .catch((error) => {
                 console.log(error);

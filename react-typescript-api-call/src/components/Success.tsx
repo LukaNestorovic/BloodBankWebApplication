@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import UserService       from "../services/UserService";
+import React, {useEffect, useState} from "react";
+import UserService                  from "../services/UserService";
 import {useNavigate} from "react-router-dom";
 import {Container}   from "@mui/material";
 
@@ -10,6 +10,15 @@ const Success = () => {
     const [dto, setDto] = useState({
         email: localStorage.getItem("email")
     })
+
+    const email = localStorage.getItem("email")
+
+    useEffect(() => {
+        if(email == null) {
+            console.error("Access denied")
+            navigate("/")
+        }
+    },[])
 
     const home = (e: any) => {
         e.preventDefault();

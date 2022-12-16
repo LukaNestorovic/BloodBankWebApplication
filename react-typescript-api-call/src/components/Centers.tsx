@@ -2,13 +2,21 @@ import {useEffect, useState} from "react";
 import CenterService from "../services/CenterService"
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel} from "@mui/material";
 import Center from "./Center"
+import {
+    useNavigate
+} from "react-router-dom";
 
 export default function Centers(){
 
     const [loading, setLoading] = useState(true);
     const [centers, setCenters] = useState(null);
+    const navigate = useNavigate()
+
+    let role = localStorage.getItem("role")
+    const enable = localStorage.getItem("enable")
 
     useEffect(() => {
+        if(role === "user" && enable === "true"){
         const fetchData = async () => {
             setLoading(true);
             try {
@@ -20,6 +28,12 @@ export default function Centers(){
             setLoading(false);
         };
         fetchData();
+        }
+        else{
+            console.error("Access denied")
+            navigate("/")
+        }
+
     }, []);
 
     const [rowData, setRowData] = useState(centers);

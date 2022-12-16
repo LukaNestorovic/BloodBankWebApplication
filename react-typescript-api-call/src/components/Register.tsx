@@ -84,7 +84,9 @@ export default function Register() {
             UserService.saveUser(user)
                 .then((response) => {
                     console.log(response);
+//                    localStorage.setItem("enable", null)
                     localStorage.setItem("email", response.data.email)
+
 //                    navigate("/profile");
                 })
                 .catch((error) => {

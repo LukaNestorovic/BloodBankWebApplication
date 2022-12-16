@@ -1,16 +1,25 @@
 import * as React                                                                               from 'react';
 import {Button, Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack} from "@mui/material";
-import {useState}                                                                               from "react";
+import {useEffect, useState}                                                                    from "react";
 import UserService
                                                                                                 from "../services/UserService";
 import DonorFormService
                                                                                                 from "../services/DonorFormService";
 import {HttpStatusCode}                                                                         from "axios";
+import {useNavigate}                                                                            from "react-router-dom";
 
 
 export default function DonorForm() {
     var storageRole = localStorage.getItem("role")
+    const navigate = useNavigate()
+    const enable = localStorage.getItem("enable")
 
+    useEffect(() => {
+        if(storageRole != "user" || enable != "true") {
+            console.error("Access denied")
+            navigate("/")
+        }
+    },[])
 
         const [gender1, setGender1] = useState("")
         const handleChange1 = (event: SelectChangeEvent) => {

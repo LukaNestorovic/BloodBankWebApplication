@@ -1,16 +1,23 @@
-import {useEffect, useState}                                                                     from "react";
+import {useEffect, useState} from "react";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel} from "@mui/material";
-import Appointment                                                                               from "./Appointment"
-import AppointmentService                                                                        from "../services/AppointmentService";
+import Appointment from "./Appointment"
+import AppointmentService from "../services/AppointmentService";
 import DeleteAppointment from "./DeleteAppointment";
+import {
+    useNavigate
+} from "react-router-dom";
 
 export default function DeleteAppointments(){
 
     const [loading, setLoading] = useState(true);
     const [appointments, setAppointments] = useState(null);
+    const navigate = useNavigate()
+    const role = localStorage.getItem("role")
+    const enable = localStorage.getItem("enable")
 
 
     useEffect(() => {
+        if(role === "user" && enable === "true"){
         const fetchData = async () => {
             setLoading(true);
             try {
@@ -22,6 +29,11 @@ export default function DeleteAppointments(){
             setLoading(false);
         };
         fetchData();
+        }
+        else{
+            console.error("Access denied")
+            navigate("/")
+        }
     }, []);
 
     const [rowData, setRowData] = useState(appointments);
