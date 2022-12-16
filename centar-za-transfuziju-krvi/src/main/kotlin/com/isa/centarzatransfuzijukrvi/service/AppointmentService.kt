@@ -69,4 +69,20 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         termin.get().updateAppointment(pacijent)
         return appointmentRepository.save(termin.get())
     }
+
+    fun deleteAppointment(id: Int) : Appointment{
+        val termin = appointmentRepository.findById(id)
+        termin.get().deleteAppointment()
+        return appointmentRepository.save(termin.get())
+    }
+
+    fun findAppointmentsOfPatient(user: RegisteredUser) : List<AppointmentDTO> {
+        var termini: ArrayList<AppointmentDTO> = ArrayList()
+        for(app in appointmentRepository.findAll()){
+            if(app.donor == user) {
+                termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
+            }
+        }
+        return termini
+    }
 }

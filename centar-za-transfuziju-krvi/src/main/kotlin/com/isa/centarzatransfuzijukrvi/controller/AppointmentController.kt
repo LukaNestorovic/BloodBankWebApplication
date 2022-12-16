@@ -1,10 +1,7 @@
 package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentDTO
-import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
-import com.isa.centarzatransfuzijukrvi.model.dto.UpdateDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.*
 import com.isa.centarzatransfuzijukrvi.service.AppointmentService
 import com.isa.centarzatransfuzijukrvi.service.RegisteredUserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,11 +30,19 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     @PutMapping(path = ["/appointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun updateAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment> {
         var pacijent = registeredUserService.findByEmail(dto.email)
-        println(dto.email)
-        println(dto.id)
         var povratna = appointmentService.updateAppointment(dto.id, pacijent)
-        println(povratna.donor!!.id)
         return ResponseEntity(povratna, HttpStatus.OK)
     }
 
+    @GetMapping(path = ["/scheduledappointment/{email}"],produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getAppointmentsOfPatient(@PathVariable("email") email: String): ResponseEntity<List<AppointmentDTO>> {
+        var pacijent = registeredUserService.findByEmail(email)
+        return ResponseEntity(appointmentService.findAppointmentsOfPatient(pacijent), HttpStatus.OK)
+    }
+
+    @PutMapping(path = ["/deleteappointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun deleteAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment>{
+        var povratna = appointmentService.deleteAppointment(dto.id)
+        return ResponseEntity(povratna, HttpStatus.OK)
+    }
 }

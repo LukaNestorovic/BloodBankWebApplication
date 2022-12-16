@@ -2,18 +2,19 @@ import {useEffect, useState}                                                    
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel} from "@mui/material";
 import Appointment                                                                               from "./Appointment"
 import AppointmentService                                                                        from "../services/AppointmentService";
+import DeleteAppointment from "./DeleteAppointment";
 
 export default function DeleteAppointments(){
 
-
     const [loading, setLoading] = useState(true);
     const [appointments, setAppointments] = useState(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await AppointmentService.findScheduledAppointment();
+                const response = await AppointmentService.findScheduledAppointment(localStorage.getItem("email"));
                 setAppointments(response.data);
             } catch (error) {
                 console.log(error);
@@ -30,7 +31,7 @@ export default function DeleteAppointments(){
 
         <TableContainer component={Paper}>
             <h1 style={{textAlign: 'center',
-                alignSelf: 'center'}}>Appointments</h1>
+                alignSelf: 'center'}}>Scheduled Appointments</h1>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -48,7 +49,7 @@ export default function DeleteAppointments(){
                 {!loading && (
                     <TableBody>
                         {appointments.map((appointment:any) => (
-                            <Appointment
+                            <DeleteAppointment
                                 appointment={appointment}
                                 key={appointment.id}/>
                         ))}

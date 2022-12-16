@@ -8,7 +8,8 @@ import GlobalCenters from "./components/GlobalCenters"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DonorForm from "./components/DonorForm";
 import AddAppointmentStaff from './components/AddAppointmentStaff';
-import Appointments from "./components/Appointments"
+import Appointments       from "./components/Appointments"
+import DeleteAppointments from "./components/DeleteAppointments";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/donorform" element={<DonorForm />} />
           <Route path="/appointment/staff" element={<AddAppointmentStaff />} />
           <Route path="/appointments" element={<Appointments />} />
+          <Route path="/scheduledappointments" element={<DeleteAppointments />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -28,4 +28,8 @@ data class Appointment(
     fun updateAppointment(user: RegisteredUser){
         this.donor = user
     }
+
+    fun deleteAppointment(){
+        this.donor = null
+    }
 }
