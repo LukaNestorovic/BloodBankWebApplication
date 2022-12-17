@@ -14,6 +14,7 @@ class EmailService(
     @Autowired private val mailSender: JavaMailSender
 ) {
 
+
     @Async
     fun sendEmail(subject: String, body: String, targetEmail: String){
         val message = SimpleMailMessage()
@@ -23,6 +24,7 @@ class EmailService(
         message.setTo(targetEmail)
 
         mailSender.send(message)
+        return ("Mail sent")
     }
 
 

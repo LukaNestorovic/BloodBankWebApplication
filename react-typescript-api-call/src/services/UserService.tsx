@@ -15,6 +15,12 @@ class UserService {
     logIn(user: any){
         return axios.post(EMPLOYEE_API_BASE_URL + "login", user)
     }
+    updateEnable(data: any){
+        return axios.put(EMPLOYEE_API_BASE_URL + "enable", data)
+    }
+    sendEmail(data: any){
+        return axios.post(EMPLOYEE_API_BASE_URL + "sendemail/" + data)
+    }
 }
 
 export default new UserService();

@@ -51,7 +51,9 @@ data class RegisteredUser(
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val reports: List<ExamReport>?,
     @OneToMany(mappedBy = "donor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val appointments: List<Appointment>?
+    val appointments: List<Appointment>?,
+    @Column
+    var enable: Boolean?
 ) {
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name
@@ -63,6 +65,9 @@ data class RegisteredUser(
         if(newData.gender!=null) this.gender = newData.gender
         if(newData.occupation!=null) this.occupation = newData.occupation
         if(newData.information!=null) this.information = newData.information
+    }
 
+    fun updateEnable(){
+        this.enable = true
     }
 }

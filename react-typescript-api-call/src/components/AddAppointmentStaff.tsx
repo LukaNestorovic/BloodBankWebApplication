@@ -7,7 +7,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import AppointmentService from "../services/AppointmentService"
+// @ts-ignore
 import { Calendar, momentLocalizer } from 'react-big-calendar'
+// @ts-ignore
 import { dateFnsLocalizer, Event } from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"

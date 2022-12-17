@@ -16,6 +16,7 @@ data class RegisteredUserDto(
     val gender: String?,
     val occupation: String?,
     val information: String?,
+    val role: String?,
     var card: Loyalty?,
 ) {
     constructor(user : RegisteredUser) :
@@ -32,5 +33,6 @@ data class RegisteredUserDto(
         user.gender,
         user.occupation,
         user.information,
+        user.role,
         user.card)
 }
