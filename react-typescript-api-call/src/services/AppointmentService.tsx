@@ -9,17 +9,18 @@ class AppointmentService {
     findAppointmentsAdmin() {
         return axios.get(API_BASE_URL + "appointment/admin")
     }
-    findAppointments(){
+    findAppointments() {
         return axios.get(API_BASE_URL + "appointments")
     }
-    updateAppointment(data:any) {
+    updateAppointment(data: any) {
         return axios.put(API_BASE_URL + "appointment", data)
     }
     findScheduledAppointment(data: any) {
         return axios.get(API_BASE_URL + "scheduledappointment/" + data)
     }
-    deleteAppointment(data:any) {
+    deleteAppointment(data: any) {
         return axios.put(API_BASE_URL + "deleteappointment", data)
+    }
     findAppointmentsUser(data: any) {
         return axios.post(API_BASE_URL + "appointment/user", data)
     }
