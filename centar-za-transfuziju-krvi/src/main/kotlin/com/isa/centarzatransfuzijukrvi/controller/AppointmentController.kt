@@ -27,8 +27,12 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     fun getAllAdmin(): ResponseEntity<List<AppointmentFullDTO>?> = ResponseEntity(appointmentService.findAll(),HttpStatus.OK)
 
 
-    @GetMapping(path = ["/appointments"],produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getAllAppointments(): ResponseEntity<List<AppointmentDTO>> = ResponseEntity(appointmentService.findAllEmptyAppointments(), HttpStatus.OK)
+    @GetMapping(path = ["/appointments/{enable}/{role}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getAllAppointments(@PathVariable("enable") enable: String, @PathVariable("role") role: String): ResponseEntity<List<AppointmentDTO>> {
+        if(role == "user" && enable == "true")
+            return ResponseEntity(appointmentService.findAllEmptyAppointments(), HttpStatus.OK)
+        else return ResponseEntity(appointmentService.findAllEmptyAppointments(), HttpStatus.UNAUTHORIZED)
+    }
 
     @PutMapping(path = ["/appointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun updateAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment> {
@@ -37,10 +41,13 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
         return ResponseEntity(povratna, HttpStatus.OK)
     }
 
-    @GetMapping(path = ["/scheduledappointment/{email}"],produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getAppointmentsOfPatient(@PathVariable("email") email: String): ResponseEntity<List<AppointmentDTO>> {
-        var pacijent = registeredUserService.findByEmail(email)
-        return ResponseEntity(appointmentService.findAppointmentsOfPatient(pacijent), HttpStatus.OK)
+    @GetMapping(path = ["/scheduledappointment/{email}/{role}/{enable}"],produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getAppointmentsOfPatient(@PathVariable("email") email: String, @PathVariable("role") role: String, @PathVariable("enable") enable: String): ResponseEntity<List<AppointmentDTO>> {
+        if(role == "user" && enable == "true") {
+            var pacijent = registeredUserService.findByEmail(email)
+            return ResponseEntity(appointmentService.findAppointmentsOfPatient(pacijent), HttpStatus.OK)
+        }
+        else return ResponseEntity(null, HttpStatus.UNAUTHORIZED)
     }
 
     @PutMapping(path = ["/deleteappointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])

@@ -9,8 +9,8 @@ class CenterService {
     getCentersGlobalFilter(data: any){
         return axios.post(CENTER_API_BASE_URL + "global-centers", data)
     }    
-    getCenters() {
-        return axios.get(CENTER_API_BASE_URL + "centers");
+    getCenters(role:any, enable:any) {
+        return axios.get(CENTER_API_BASE_URL + "centers/" + role + "/" + enable);
     }
 
     getCenterById(id:any) {
