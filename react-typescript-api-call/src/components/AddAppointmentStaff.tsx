@@ -62,7 +62,7 @@ export default function AddAppointmentStaff() {
     }
 
     React.useEffect(() => {
-        CenterService.getCenters().
+        CenterService.getCenters(null,null).
             then((response) => {
                 console.log(response.data);
                 setCenters(response.data)

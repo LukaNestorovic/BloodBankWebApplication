@@ -20,10 +20,13 @@ class CenterController(@Autowired val centerService: CenterService) {
         return ResponseEntity(newCenter, HttpStatus.CREATED)
     }
 
-    @GetMapping(path = ["/centers"],produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getCenters() : ResponseEntity<List<Center?>> {
-        val centerList : List<Center?>? = centerService.findAll()
-        return ResponseEntity(centerList, HttpStatus.OK)
+    @GetMapping(path = ["/centers/{role}/{enable}"],produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getCenters(@PathVariable("role") role: String, @PathVariable("enable") enable: String) : ResponseEntity<List<Center?>> {
+        if(role == "user" && enable == "true"){
+            val centerList : List<Center?>? = centerService.findAll()
+            return ResponseEntity(centerList, HttpStatus.OK)
+        }
+        else return ResponseEntity(null, HttpStatus.UNAUTHORIZED)
     }
 
     @GetMapping(path = ["/centers/{centerId}"])

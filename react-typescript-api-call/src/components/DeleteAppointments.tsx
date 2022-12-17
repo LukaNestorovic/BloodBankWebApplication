@@ -21,7 +21,7 @@ export default function DeleteAppointments(){
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await AppointmentService.findScheduledAppointment(localStorage.getItem("email"));
+                const response = await AppointmentService.findScheduledAppointment(localStorage.getItem("email"),role,enable);
                 setAppointments(response.data);
             } catch (error) {
                 console.log(error);

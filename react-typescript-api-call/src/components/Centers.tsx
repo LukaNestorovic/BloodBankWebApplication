@@ -20,7 +20,7 @@ export default function Centers(){
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await CenterService.getCenters();
+                const response = await CenterService.getCenters(role, enable);
                 setCenters(response.data);
             } catch (error) {
                 console.log(error);

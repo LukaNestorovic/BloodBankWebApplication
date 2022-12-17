@@ -1,12 +1,13 @@
 import React, {useState}     from "react";
 import {TableCell, TableRow} from "@mui/material";
 import AppointmentService    from "../services/AppointmentService";
+import {useNavigate}         from "react-router-dom";
 
 // @ts-ignore
 const Appointment = ({appointment}) => {
 
     var donor = localStorage.getItem("email")
-
+    const navigate = useNavigate()
     const [dto, setDto] = useState({
         id: appointment.id,
         email: donor
@@ -19,8 +20,14 @@ const Appointment = ({appointment}) => {
                 console.log(response);
                 window.location.reload();
         }).catch((error) => {
-            console.log(donor)
-            console.log(appointment.id)
+            if(error.response.status == 400)
+                alert("Imate zakazan termin");
+            else if(error.response.status == 404) {
+                alert("Popunite formu");
+                navigate("/donorform")
+            }
+            else if(error.response.status == 401)
+                alert("Dali ste krv u poslednjih 6 meseci")
             console.log(error);
         })
     };

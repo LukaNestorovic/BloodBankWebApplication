@@ -13,13 +13,17 @@ export default function Appointments(){
     const role = localStorage.getItem("role")
     const navigate = useNavigate()
     const enable = localStorage.getItem("enable")
+    const [dto, setDto] = useState({
+        role: role,
+        enable: enable
+    })
 
     useEffect(() => {
         if(role === "user" && enable === "true"){
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await AppointmentService.findAppointments();
+                const response = await AppointmentService.findAppointments(role, enable);
                 setAppointments(response.data);
             } catch (error) {
                 console.log(error);
