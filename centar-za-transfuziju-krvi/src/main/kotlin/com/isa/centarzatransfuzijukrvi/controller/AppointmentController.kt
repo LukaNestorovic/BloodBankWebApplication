@@ -1,6 +1,7 @@
 package com.isa.centarzatransfuzijukrvi.controller
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
+import com.isa.centarzatransfuzijukrvi.model.Center
 import com.isa.centarzatransfuzijukrvi.model.dto.*
 import com.isa.centarzatransfuzijukrvi.service.AppointmentService
 import com.isa.centarzatransfuzijukrvi.service.RegisteredUserService
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping(path = ["api"])
@@ -23,6 +25,7 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
 
     @GetMapping(path=["appointment/admin"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllAdmin(): ResponseEntity<List<AppointmentFullDTO>?> = ResponseEntity(appointmentService.findAll(),HttpStatus.OK)
+
 
     @GetMapping(path = ["/appointments"],produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllAppointments(): ResponseEntity<List<AppointmentDTO>> = ResponseEntity(appointmentService.findAllEmptyAppointments(), HttpStatus.OK)
@@ -44,5 +47,14 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     fun deleteAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment>{
         var povratna = appointmentService.deleteAppointment(dto.id)
         return ResponseEntity(povratna, HttpStatus.OK)
+
+    @PostMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun queryAppointments(@RequestBody query : AppointmentSearchUserDTO) : ResponseEntity<List<AppointmentCenterUserDTO>>{
+        return ResponseEntity(appointmentService.findCentersFreeAtTime(query),HttpStatus.OK)
+    }
+    @PutMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun enrollAppointment(@RequestBody enroll : AppointmentEnrollDTO) : ResponseEntity<Appointment>{
+        return ResponseEntity(appointmentService.enrollAppointment(enroll),HttpStatus.CREATED)
+
     }
 }

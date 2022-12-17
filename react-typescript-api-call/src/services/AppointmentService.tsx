@@ -20,6 +20,11 @@ class AppointmentService {
     }
     deleteAppointment(data:any) {
         return axios.put(API_BASE_URL + "deleteappointment", data)
+    findAppointmentsUser(data: any) {
+        return axios.post(API_BASE_URL + "appointment/user", data)
+    }
+    enrollAppointmentsUser(data: any) {
+        return axios.put(API_BASE_URL + "appointment/user", data)
     }
 }
 
