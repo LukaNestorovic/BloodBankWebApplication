@@ -17,7 +17,14 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     @PostMapping(path=["appointment/admin"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createAdmin(@RequestBody unscheduledAppointment : AppointmentAdminDTO) : ResponseEntity<Appointment>{
         //println("REQUEST:" + unscheduledAppointment.centerName.toString() + " DATE:" + unscheduledAppointment.date.toString())
-        return ResponseEntity(appointmentService.create(unscheduledAppointment),HttpStatus.CREATED)
+        val app = appointmentService.create(unscheduledAppointment)
+        if(app!=null){
+            if(app.id==-1){
+                return ResponseEntity(app,HttpStatus.FORBIDDEN)
+            }
+            return ResponseEntity(app,HttpStatus.CREATED)
+        }
+        return return ResponseEntity(null,HttpStatus.BAD_REQUEST)
     }
 
     @PutMapping(path=["appointment/admin"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -31,6 +38,9 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     }
     @PutMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun enrollAppointment(@RequestBody enroll : AppointmentEnrollDTO) : ResponseEntity<Appointment>{
-        return ResponseEntity(appointmentService.enrollAppointment(enroll),HttpStatus.CREATED)
+        val app = appointmentService.enrollAppointment(enroll)
+        if(app.id==-1)
+            return ResponseEntity(null,HttpStatus.FORBIDDEN)
+        return ResponseEntity(app,HttpStatus.CREATED)
     }
 }
