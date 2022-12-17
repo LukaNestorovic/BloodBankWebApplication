@@ -44,10 +44,10 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     }
 
     @PutMapping(path = ["/deleteappointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun deleteAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment>{
+    fun deleteAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment> {
         var povratna = appointmentService.deleteAppointment(dto.id)
         return ResponseEntity(povratna, HttpStatus.OK)
-
+    }
     @PostMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun queryAppointments(@RequestBody query : AppointmentSearchUserDTO) : ResponseEntity<List<AppointmentCenterUserDTO>>{
         return ResponseEntity(appointmentService.findCentersFreeAtTime(query),HttpStatus.OK)

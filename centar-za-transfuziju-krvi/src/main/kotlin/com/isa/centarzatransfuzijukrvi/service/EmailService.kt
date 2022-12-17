@@ -16,7 +16,7 @@ class EmailService(
 
 
     @Async
-    fun sendEmail(subject: String, body: String, targetEmail: String){
+    fun sendEmail(subject: String, body: String, targetEmail: String):String{
         val message = SimpleMailMessage()
 
         message.setSubject(subject)
