@@ -21,6 +21,7 @@ const DeleteAppointment = ({appointment}) => {
                 window.location.reload();
             }).catch((error) => {
             console.log(error);
+            alert("Manje od 24h do termina")
         })
     };
 

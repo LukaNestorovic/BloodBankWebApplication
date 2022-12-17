@@ -63,6 +63,8 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         return retVal
     }
 
+    fun findAllRepo() : List<Appointment> = appointmentRepository.findAll()
+
     fun findAllEmptyAppointments() : List<AppointmentDTO> {
         var termini: ArrayList<AppointmentDTO> = ArrayList()
         for(app in appointmentRepository.findAll()){
