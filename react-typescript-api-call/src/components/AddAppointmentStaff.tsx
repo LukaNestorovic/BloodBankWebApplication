@@ -47,10 +47,6 @@ export default function AddAppointmentStaff() {
 
     const handleScheduleAppointment = () => {
         //console.log(appointment)
-        setAppointment({
-            ...appointment,
-            email: localStorage.getItem("email")
-        });
         if (appointment.centerName === "" || appointment.date === "") {
             alert("Select all data!");
             return
@@ -72,6 +68,10 @@ export default function AddAppointmentStaff() {
             console.error("Access denied")
             navigate("/")
         }
+        setAppointment({
+            ...appointment,
+            email: localStorage.getItem("email")
+        });
         CenterService.getCenters().
             then((response) => {
                 console.log(response.data);

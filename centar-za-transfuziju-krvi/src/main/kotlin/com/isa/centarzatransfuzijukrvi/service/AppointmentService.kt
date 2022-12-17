@@ -2,10 +2,12 @@ package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
 import com.isa.centarzatransfuzijukrvi.model.Center
+import com.isa.centarzatransfuzijukrvi.model.Staff
 import com.isa.centarzatransfuzijukrvi.model.dto.*
 import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
+import com.isa.centarzatransfuzijukrvi.repository.StaffRepository
 import org.hibernate.type.PrimitiveCharacterArrayNClobType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -15,20 +17,21 @@ import java.util.Date
 
 @Service
 class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository,
-                         @Autowired val userRepository: RegisteredUserRepository, @Autowired val emailService: EmailService) {
+                         @Autowired val userRepository: RegisteredUserRepository, @Autowired val emailService: EmailService,@Autowired val staffRepository: StaffRepository) {
     fun create(toSchedule: AppointmentAdminDTO) : Appointment?{
         val center = centerRepository.findByName(toSchedule.centerName).get()
         val endDate = Date(toSchedule.date.time+1000*60*60)
-
-//        println("START:" + toSchedule.date::class.simpleName + " " + toSchedule.date)
-//        println("END:" + endDate::class.simpleName + " " + endDate)
-
         val overlap = this.findOverlappingAppointments(toSchedule.date,endDate,toSchedule.centerName)
-        if(overlap!=null) {
+        if(overlap!=null)
             return null;
+        val staff: Staff = staffRepository.findOneByEmail(toSchedule.email)
+        
+        return if(centerRepository.findByName(toSchedule.centerName).get() == staff.center && staff.role == "Doctor"){
+            appointmentRepository.save(Appointment(time = toSchedule.date, center = center, doctor = staff, donor = null,))
+        }else{
+            appointmentRepository.save(Appointment(time = toSchedule.date, center = center, doctor = null, donor = null,))
         }
-        val appointment = Appointment(time = toSchedule.date, center = center, doctor = null, donor = null,)
-        return appointmentRepository.save(appointment)
+
     }
     fun findOverlappingAppointments(start: Date, end: Date, centerName: String): Appointment?{
         val allAppointments = appointmentRepository.findAll()
@@ -46,7 +49,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
     fun findAll(email: String) : List<AppointmentFullDTO>? {
         var retVal: ArrayList<AppointmentFullDTO> = ArrayList()
         for(app in appointmentRepository.findAll()){
-            println("MAIL:" + app.doctor?.email + " " + email)
+            //println("MAIL:" + app.doctor?.email + " " + email)
             if(app.doctor?.email.equals(email)){
                 retVal.add(AppointmentFullDTO(app.time,Date(
                     app.time.time+1000*60*60),

@@ -22,6 +22,8 @@ data class Center(
     val ratings: List<Rating>?,
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val appointments: List<Appointment>?,
+    @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val staff: List<Staff>?,
 ) {
 
 
