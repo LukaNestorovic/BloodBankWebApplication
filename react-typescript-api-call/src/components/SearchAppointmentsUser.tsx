@@ -4,10 +4,13 @@ import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import React from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import AppointmentService from "../services/AppointmentService"
 import DonorForm from "./DonorForm"
 
 export default function SearchAppointmentsUser() {
+    const navigate = useNavigate()
+
     interface Appointments {
         appointment: {
             name: string
@@ -18,16 +21,19 @@ export default function SearchAppointmentsUser() {
             rating: number
         }[]
     }
+
     interface Query {
         date: string,
         email: string
     }
+
     interface Enroll {
         date: string,
         center: string,
         email: string,
         appId: string
     }
+
     const [appointments, setAppointments] = useState<Appointments["appointment"]>();
 
     const [query, setQuery] = useState<Query>({
@@ -63,6 +69,8 @@ export default function SearchAppointmentsUser() {
                 console.log(error);
             });
     }
+
+
     const handleSchedule = (e: any) => {
         // console.log(JSON.stringify(e.currentTarget.getAttribute("button-data")))
         const appData = JSON.stringify(e.currentTarget.getAttribute("button-data")).split(",", 3)
@@ -91,6 +99,8 @@ export default function SearchAppointmentsUser() {
 
     }
 
+
+
     const [sortDirection, setSortDirection] = useState("asc")
 
     const sortApps = (apps: any, orderBy: any) => {
@@ -106,10 +116,20 @@ export default function SearchAppointmentsUser() {
         }
     };
 
+
     const handleSort = () => {
         sortApps(appointments, sortDirection)
         setSortDirection(sortDirection === "asc" ? "desc" : "asc")
     }
+
+
+    React.useEffect(() => {
+        if ("user" != localStorage.getItem("role")) {
+            console.error("Access denied")
+            navigate("/")
+        }
+    }, []);
+
 
     return (
         <Container>

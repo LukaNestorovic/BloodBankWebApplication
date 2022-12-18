@@ -13,10 +13,13 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import { dateFnsLocalizer, Event } from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"
+import { useNavigate } from "react-router-dom";
 const localizer = momentLocalizer(moment)
 
 export default function AddAppointmentStaff() {
     var i = 1;
+
+    const navigate = useNavigate()
 
     interface Centers {
         center: {
@@ -31,7 +34,8 @@ export default function AddAppointmentStaff() {
 
     const [appointment, setAppointment] = useState({
         centerName: "",
-        date: ""
+        date: "",
+        email: "",
     })
 
     const [centers, setCenters] = useState<Centers["center"]>();
@@ -62,7 +66,15 @@ export default function AddAppointmentStaff() {
     }
 
     React.useEffect(() => {
-        CenterService.getCenters(null,null).
+        if ("staff" != localStorage.getItem("role")) {
+            console.error("Access denied")
+            navigate("/")
+        }
+        setAppointment({
+            ...appointment,
+            email: localStorage.getItem("email")
+        });
+        CenterService.getCenters().
             then((response) => {
                 console.log(response.data);
                 setCenters(response.data)
@@ -74,7 +86,8 @@ export default function AddAppointmentStaff() {
     }, []);
 
     const refreshCalendar = () => {
-        AppointmentService.findAppointmentsAdmin().
+        console.log({ email: localStorage.getItem("email") })
+        AppointmentService.findAppointmentsAdmin({ email: localStorage.getItem("email") }).
             then((response) => {
                 console.log(response.data);
                 const evs: React.SetStateAction<Event[]> | { allDay: boolean; title: any; start: Date; end: Date; resource: any; }[] = [];
