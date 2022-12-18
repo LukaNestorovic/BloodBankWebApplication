@@ -27,6 +27,12 @@ class AppointmentService {
     enrollAppointmentsUser(data: any) {
         return axios.put(API_BASE_URL + "appointment/user", data)
     }
+    generateQR(center: any, doctor: any, date: any){
+        return axios.get(API_BASE_URL + "qr/" + center + "/" + doctor + "/" + date)
+    }
+    sendMail(data: any){
+        return axios.post(API_BASE_URL + "sendemailqr/" + data)
+    }
 }
 
 export default new AppointmentService();
