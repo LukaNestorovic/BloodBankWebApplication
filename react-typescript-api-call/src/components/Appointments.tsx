@@ -39,6 +39,26 @@ export default function Appointments(){
     }, []);
 
     const [rowData, setRowData] = useState(appointments);
+    const [orderDirection, setOrderDirection] = useState("asc");
+
+    const sortArrayDate = (arr:any, orderBy:any) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+                return arr.sort((a:any, b:any) =>
+                    a.date > b.date ? 1 : b.date > a.date ? -1 : 0
+                );
+            case "desc":
+                return arr.sort((a:any, b:any) =>
+                    a.date < b.date ? 1 : b.date < a.date ? -1 : 0
+                );
+        }
+    };
+
+    const handleSortRequestDate = () => {
+        setRowData(sortArrayDate(appointments, orderDirection));
+        setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
+    };
 
     // @ts-ignore
     return(
@@ -50,8 +70,8 @@ export default function Appointments(){
                 <TableHead>
                     <TableRow>
                         <TableCell align={"center"}>Id</TableCell>
-                        <TableCell align={"center"}>
-                            Date</TableCell>
+                        <TableCell align={"center"} onClick={handleSortRequestDate}><TableSortLabel active={true} direction={"desc"}>
+                            Date</TableSortLabel></TableCell>
                         <TableCell align={"center"} >
                             Center</TableCell>
                         <TableCell align={"center"}>Doctor</TableCell>

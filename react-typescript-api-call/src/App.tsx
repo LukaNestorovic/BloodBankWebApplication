@@ -1,17 +1,18 @@
 import React from 'react';
 import './App.css';
 import LogIn from "./components/LogIn";
-import Register from "./components/Register"
-import Centers from "./components/Centers"
-import UpdateProfile from "./components/UpdateProfile"
-import GlobalCenters from "./components/GlobalCenters"
+import Register                         from "./components/Register"
+import Centers                          from "./components/Centers"
+import UpdateProfile                    from "./components/UpdateProfile"
+import GlobalCenters                    from "./components/GlobalCenters"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import DonorForm from "./components/DonorForm";
-import AddAppointmentStaff from './components/AddAppointmentStaff';
-import Appointments       from "./components/Appointments"
-import DeleteAppointments from "./components/DeleteAppointments";
-import Success            from "./components/Success";
-import SearchAppointmentsUser from './components/SearchAppointmentsUser';
+import DonorForm                        from "./components/DonorForm";
+import AddAppointmentStaff              from './components/AddAppointmentStaff';
+import Appointments                     from "./components/Appointments"
+import DeleteAppointments               from "./components/DeleteAppointments";
+import Success                          from "./components/Success";
+import SearchAppointmentsUser           from './components/SearchAppointmentsUser';
+import Home                             from "./components/Home";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/scheduledappointments" element={<DeleteAppointments />} />
           <Route path="/success" element={<Success />} />
           <Route path="/appointment/user" element={<SearchAppointmentsUser />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>

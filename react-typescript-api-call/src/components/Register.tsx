@@ -12,12 +12,13 @@ import {
     InputLabel, MenuItem,
     OutlinedInput,
     Paper, Select, SelectChangeEvent, Stack
-} from "@mui/material";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+}                              from "@mui/material";
+import Visibility              from '@mui/icons-material/Visibility';
+import VisibilityOff           from '@mui/icons-material/VisibilityOff';
 import {ChangeEvent, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import UserService from "../services/UserService"
+import {useNavigate}           from "react-router-dom";
+import UserService             from "../services/UserService"
+import {wait}                  from "@testing-library/user-event/dist/utils";
 
 interface State {
     gender: string;
@@ -78,9 +79,13 @@ export default function Register() {
         setUser({ ...user, [e.target.name]: value });
     };
 
-    const saveUser = (e: any) => {
+    const delay = (ms:any) => new Promise(
+        resolve => setTimeout(resolve, ms)
+    );
+
+    const saveUser = async (e: any) => {
         e.preventDefault();
-        if(user.password === user.repeatPassword) {
+        if (user.password === user.repeatPassword) {
             UserService.saveUser(user)
                 .then((response) => {
                     console.log(response);
@@ -92,8 +97,8 @@ export default function Register() {
                 .catch((error) => {
                     console.log(error);
                 });
-        }
-        else alert("Sifre se ne poklapaju")
+        } else alert("Sifre se ne poklapaju")
+        await delay(1000)
         UserService.sendEmail(localStorage.getItem("email"))
             .then((response) => {
                 console.log(response);

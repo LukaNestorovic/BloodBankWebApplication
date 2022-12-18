@@ -19,6 +19,13 @@ const Appointment = ({appointment}) => {
             .then((response) => {
                 console.log(response);
                 window.location.reload();
+                AppointmentService.generateQR(appointment.center, appointment.doctor, appointment.date)
+                    .then((response) => {
+                        console.log(response);
+                        console.log(donor)
+                    }).catch((error) => {
+                        console.log(error)
+                })
         }).catch((error) => {
             if(error.response.status == 400)
                 alert("Imate zakazan termin");
@@ -29,6 +36,14 @@ const Appointment = ({appointment}) => {
             else if(error.response.status == 401)
                 alert("Dali ste krv u poslednjih 6 meseci")
             console.log(error);
+        })
+        AppointmentService.sendMail(donor)
+            .then((response) => {
+                console.log(donor);
+                console.log(response);
+                alert("Check your email");
+            }).catch((error) => {
+            console.log(error)
         })
     };
 

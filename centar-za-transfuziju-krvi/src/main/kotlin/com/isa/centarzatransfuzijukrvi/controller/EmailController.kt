@@ -16,4 +16,10 @@ class EmailController(@Autowired val emailService: EmailService) {
     fun sendMail(@PathVariable("email") email: String): String {
         return emailService.sendEmail("Registracija", "http://localhost:3000/success", email)
     }
+
+    @PostMapping("/sendemailqr/{email}")
+    fun sendMailQR(@PathVariable("email") email: String): String {
+        println(email)
+        return emailService.sendEmailAtt("QR", " ", email)
+    }
 }
