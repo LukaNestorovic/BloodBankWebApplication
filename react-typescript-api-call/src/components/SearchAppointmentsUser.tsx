@@ -93,6 +93,10 @@ export default function SearchAppointmentsUser() {
                 window.location.reload()
             })
             .catch((error) => {
+                if (error.response.status == "403") {
+                    alert("CREDENTIALS NOT VALID!")
+                    navigate("/")
+                }
                 console.log(error);
             });
 

@@ -7,9 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import AppointmentService from "../services/AppointmentService"
-// @ts-ignore
 import { Calendar, momentLocalizer } from 'react-big-calendar'
-// @ts-ignore
 import { dateFnsLocalizer, Event } from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"
@@ -61,6 +59,13 @@ export default function AddAppointmentStaff() {
                 refreshCalendar()
             })
             .catch((error) => {
+                if (error.response.status == "403") {
+                    alert("NOT STAFF!")
+                    navigate("/")
+                }
+                if (error.response.status == "406") {
+                    alert("Appointment not available at designated time!")
+                }
                 console.log(error);
             });
     }
@@ -74,7 +79,7 @@ export default function AddAppointmentStaff() {
             ...appointment,
             email: localStorage.getItem("email")
         });
-        CenterService.getCenters().
+        CenterService.getCentersGlobal().
             then((response) => {
                 console.log(response.data);
                 setCenters(response.data)

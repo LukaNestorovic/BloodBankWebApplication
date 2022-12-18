@@ -34,7 +34,7 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
             }
             return ResponseEntity(app,HttpStatus.CREATED)
         }
-        return return ResponseEntity(null,HttpStatus.BAD_REQUEST)
+        return return ResponseEntity(null,HttpStatus.NOT_ACCEPTABLE)
     }
 
     @PutMapping(path=["appointment/admin"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
