@@ -3,6 +3,7 @@ package com.isa.centarzatransfuzijukrvi.controller
 import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
 import com.isa.centarzatransfuzijukrvi.model.Staff
 import com.isa.centarzatransfuzijukrvi.model.SysAdmin
+import com.isa.centarzatransfuzijukrvi.model.dto.DeleteDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDTO2
 import com.isa.centarzatransfuzijukrvi.model.dto.RegisteredUserDto
 import com.isa.centarzatransfuzijukrvi.service.RegisteredUserService
@@ -47,7 +48,7 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
     @PostMapping(path = ["/login"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun logIn(@RequestBody registeredUserDTO2: RegisteredUserDTO2) : ResponseEntity<RegisteredUserDTO2>{
         val userList : List<RegisteredUser> = registeredUserService.findAll()
-        val registeredUser3 : RegisteredUserDTO2 = RegisteredUserDTO2(registeredUserDTO2.id, registeredUserDTO2.email, registeredUserDTO2.password, registeredUserDTO2.role)
+        val registeredUser3 : RegisteredUserDTO2 = RegisteredUserDTO2(registeredUserDTO2.id, registeredUserDTO2.email, registeredUserDTO2.password, registeredUserDTO2.role, registeredUserDTO2.enable)
         val staffList : List<Staff> =  staffService.findAll()
         val sysAdminList : List<SysAdmin> = sysAdminService.findAll()
 
@@ -56,6 +57,7 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
                 return if(registeredUser.password == registeredUser3.password){
                     registeredUser3.id = registeredUser.id
                     registeredUser3.role = registeredUser.role
+                    registeredUser3.enable = registeredUser.enable
                     ResponseEntity(registeredUser3, HttpStatus.OK)
                 } else ResponseEntity(registeredUser3, HttpStatus.BAD_REQUEST)
             }
@@ -66,6 +68,7 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
                 return if(staff.password == registeredUser3.password){
                     registeredUser3.id = staff.id!!
                     registeredUser3.role = staff.role
+                    registeredUser3.enable = null
                     ResponseEntity(registeredUser3, HttpStatus.OK)
                 } else ResponseEntity(registeredUser3, HttpStatus.BAD_REQUEST)
             }
@@ -76,6 +79,7 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
                 return if(sysAdmin.password == registeredUser3.password){
                     registeredUser3.id = sysAdmin.id!!
                     registeredUser3.role = sysAdmin.role
+                    registeredUser3.enable = null
                     ResponseEntity(registeredUser3, HttpStatus.OK)
                 } else ResponseEntity(registeredUser3, HttpStatus.BAD_REQUEST)
             }
@@ -88,5 +92,11 @@ class RegisteredUserController(@Autowired val registeredUserService: RegisteredU
     fun getRegisteredUser(@PathVariable("userId") userId: Int) : ResponseEntity<Optional<RegisteredUser>> {
         val registeredUser: Optional<RegisteredUser> = registeredUserService.findById(userId)
         return ResponseEntity(registeredUser, HttpStatus.OK)
+    }
+
+    @PutMapping(path = ["/enable"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun setEnable(@RequestBody dto: DeleteDTO) : ResponseEntity<RegisteredUser> {
+        var povratna = registeredUserService.setEnable(dto.email)
+        return ResponseEntity(povratna, HttpStatus.OK)
     }
 }

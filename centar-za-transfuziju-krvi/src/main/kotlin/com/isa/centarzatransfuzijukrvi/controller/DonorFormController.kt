@@ -18,10 +18,37 @@ class DonorFormController(@Autowired val donorFormService: DonorFormService, @Au
     fun createDonorForm(@RequestBody donorFormDTO: DonorFormDTO) : ResponseEntity<DonorForm> {
         val email = donorFormDTO.userEmail
         val user = registeredUserService.findByEmail(email)
-        val donorForm = DonorForm(donorFormDTO.id, donorFormDTO.date, donorFormDTO.numberDonation, donorFormDTO.question1, donorFormDTO.question2, donorFormDTO.question3,
-            donorFormDTO.question4, donorFormDTO.question5, donorFormDTO.question6, donorFormDTO.question7, donorFormDTO.question8, donorFormDTO.question9,
-            donorFormDTO.question10, donorFormDTO.question11, donorFormDTO.question12, donorFormDTO.question13, donorFormDTO.question14, user)
-        val newDonorForm: DonorForm = donorFormService.create(donorForm)
-        return ResponseEntity(newDonorForm, HttpStatus.CREATED)
+        val forms = donorFormService.findAll()
+        var lista : ArrayList<DonorForm> = ArrayList()
+        for(form in forms){
+            if(form.user == user)
+                lista.add(form)
+        }
+        if(lista.size == 0) {
+            val donorForm = DonorForm(
+                donorFormDTO.id,
+                donorFormDTO.date,
+                donorFormDTO.numberDonation,
+                donorFormDTO.question1,
+                donorFormDTO.question2,
+                donorFormDTO.question3,
+                donorFormDTO.question4,
+                donorFormDTO.question5,
+                donorFormDTO.question6,
+                donorFormDTO.question7,
+                donorFormDTO.question8,
+                donorFormDTO.question9,
+                donorFormDTO.question10,
+                donorFormDTO.question11,
+                donorFormDTO.question12,
+                donorFormDTO.question13,
+                donorFormDTO.question14,
+                donorFormDTO.question15,
+                user
+            )
+            val newDonorForm: DonorForm = donorFormService.create(donorForm)
+            return ResponseEntity(newDonorForm, HttpStatus.CREATED)
+        }
+        else return ResponseEntity(null, HttpStatus.BAD_REQUEST)
     }
 }

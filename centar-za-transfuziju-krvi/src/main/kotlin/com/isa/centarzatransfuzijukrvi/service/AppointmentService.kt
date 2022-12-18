@@ -1,6 +1,10 @@
 package com.isa.centarzatransfuzijukrvi.service
 
 import com.isa.centarzatransfuzijukrvi.model.Appointment
+import com.isa.centarzatransfuzijukrvi.model.RegisteredUser
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentDTO
+import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
 import com.isa.centarzatransfuzijukrvi.model.Center
 import com.isa.centarzatransfuzijukrvi.model.Staff
 import com.isa.centarzatransfuzijukrvi.model.dto.*
@@ -11,6 +15,8 @@ import com.isa.centarzatransfuzijukrvi.repository.StaffRepository
 import org.hibernate.type.PrimitiveCharacterArrayNClobType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
+import kotlin.collections.ArrayList
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -65,6 +71,38 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         return retVal
     }
 
+    fun findAllRepo() : List<Appointment> = appointmentRepository.findAll()
+
+    fun findAllEmptyAppointments() : List<AppointmentDTO> {
+        var termini: ArrayList<AppointmentDTO> = ArrayList()
+        for(app in appointmentRepository.findAll()){
+            if(app.donor == null)
+                termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
+        }
+        return termini
+    }
+
+    fun updateAppointment(id: Int, pacijent: RegisteredUser) : Appointment {
+        val termin = appointmentRepository.findById(id)
+        termin.get().updateAppointment(pacijent)
+        return appointmentRepository.save(termin.get())
+    }
+
+    fun deleteAppointment(id: Int) : Appointment{
+        val termin = appointmentRepository.findById(id)
+        termin.get().deleteAppointment()
+        return appointmentRepository.save(termin.get())
+    }
+
+    fun findAppointmentsOfPatient(user: RegisteredUser) : List<AppointmentDTO> {
+        var termini: ArrayList<AppointmentDTO> = ArrayList()
+        for(app in appointmentRepository.findAll()){
+            if(app.donor == user) {
+                termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
+            }
+        }
+        return termini
+    }
     fun findCentersFreeAtTime(query: AppointmentSearchUserDTO): List<AppointmentCenterUserDTO>{
         var retVal: ArrayList<AppointmentCenterUserDTO> = ArrayList()
         val apps = appointmentRepository.findAll()

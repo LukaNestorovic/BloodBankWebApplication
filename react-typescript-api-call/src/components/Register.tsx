@@ -53,7 +53,8 @@ export default function Register() {
         jmbg: "",
         gender: "",
         occupation: "",
-        information: ""
+        information: "",
+        role: "user"
     })
 
     const handleChange1 = (event: SelectChangeEvent) => {
@@ -83,14 +84,25 @@ export default function Register() {
             UserService.saveUser(user)
                 .then((response) => {
                     console.log(response);
+//                    localStorage.setItem("enable", null)
                     localStorage.setItem("email", response.data.email)
-                    navigate("/profile");
+
+//                    navigate("/profile");
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
         else alert("Sifre se ne poklapaju")
+        UserService.sendEmail(localStorage.getItem("email"))
+            .then((response) => {
+                console.log(response);
+                alert("Check your email")
+            })
+            .catch((error) => {
+                console.log(localStorage.getItem("email"))
+                console.log(error);
+            });
     };
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {

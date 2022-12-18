@@ -21,6 +21,7 @@ data class DonorFormDTO(
     val question12: String,
     val question13: String,
     val question14: String,
+    val question15: String,
     val userEmail: String
 ) {
 }

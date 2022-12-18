@@ -41,6 +41,8 @@ data class DonorForm(
     val question13: String,
     @Column
     val question14: String,
+    @Column
+    val question15: String,
     @OneToOne(cascade = [CascadeType.ALL],orphanRemoval = true)
     @JoinColumn(name = "user", referencedColumnName = "id")
     val user: RegisteredUser

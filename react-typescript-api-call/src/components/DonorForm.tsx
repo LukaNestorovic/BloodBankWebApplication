@@ -1,16 +1,25 @@
 import * as React                                                                               from 'react';
 import {Button, Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack} from "@mui/material";
-import {useState}                                                                               from "react";
+import {useEffect, useState}                                                                    from "react";
 import UserService
                                                                                                 from "../services/UserService";
 import DonorFormService
                                                                                                 from "../services/DonorFormService";
 import {HttpStatusCode}                                                                         from "axios";
+import {useNavigate}                                                                            from "react-router-dom";
 
 
 export default function DonorForm() {
     var storageRole = localStorage.getItem("role")
+    const navigate = useNavigate()
+    const enable = localStorage.getItem("enable")
 
+    useEffect(() => {
+        if(storageRole != "user" || enable != "true") {
+            console.error("Access denied")
+            navigate("/")
+        }
+    },[])
 
         const [gender1, setGender1] = useState("")
         const handleChange1 = (event: SelectChangeEvent) => {
@@ -68,6 +77,10 @@ export default function DonorForm() {
         const handleChange14 = (event: SelectChangeEvent) => {
             setGender14(event.target.value as string);
         };
+    const [gender15, setGender15] = useState("")
+    const handleChange15 = (event: SelectChangeEvent) => {
+        setGender15(event.target.value as string);
+    };
         const [answer, setAnswer] = useState("")
 
         const current = new Date();
@@ -90,6 +103,7 @@ export default function DonorForm() {
             question12: "",
             question13: "",
             question14: "",
+            question15: "",
             date: current,
             userEmail: storageEmail
         })
@@ -107,7 +121,7 @@ export default function DonorForm() {
                 })
                 .catch((error) => {
                     console.log(error);
-                    console.log(storageEmail)
+                    alert("Imate popunjenu anketu");
                 });
         };
 
@@ -374,6 +388,23 @@ export default function DonorForm() {
                         </Select>
                     </FormControl>
                 </Stack>
+                <FormControl style={{width: '100ch', alignSelf: 'center'}}>
+                    <InputLabel id="demo-simple-select-label">Did you donated blood in last 6 months?</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        name="question15"
+                        id="demo-simple-select"
+                        value={gender15}
+                        label="Answer"
+                        onChange={e => {
+                            handleChange15(e);
+                            handleChange(e)
+                        }}
+                    >
+                        <MenuItem value={"Yes"}>Yes</MenuItem>
+                        <MenuItem value={"No"}>No</MenuItem>
+                    </Select>
+                </FormControl>
                 <Button variant="contained" style={{width: 200, alignSelf: 'center'}}
                         onClick={saveDonorForm}>Submit</Button>
             </Stack>

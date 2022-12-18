@@ -35,4 +35,10 @@ class RegisteredUserService(@Autowired val registeredUserRepository: RegisteredU
     fun findAll(): List<RegisteredUser> = registeredUserRepository.findAll()
 
     fun findById(id: Int) : Optional<RegisteredUser> = registeredUserRepository.findById(id)
+
+    fun setEnable(email : String) : RegisteredUser{
+        var user = registeredUserRepository.findOneByEmail(email)
+        user.updateEnable()
+        return registeredUserRepository.save(user)
+    }
 }

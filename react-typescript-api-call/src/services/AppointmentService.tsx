@@ -10,6 +10,18 @@ class AppointmentService {
         console.log(data)
         return axios.put(API_BASE_URL + "appointment/admin", data)
     }
+    findAppointments(role: any, enable:any) {
+        return axios.get(API_BASE_URL + "appointments/" + enable + "/" + role)
+    }
+    updateAppointment(data: any) {
+        return axios.put(API_BASE_URL + "appointment", data)
+    }
+    findScheduledAppointment(data: any, role:any, enable:any) {
+        return axios.get(API_BASE_URL + "scheduledappointment/" + data + "/" + role + "/" + enable)
+    }
+    deleteAppointment(data: any) {
+        return axios.put(API_BASE_URL + "deleteappointment", data)
+    }
     findAppointmentsUser(data: any) {
         return axios.post(API_BASE_URL + "appointment/user", data)
     }

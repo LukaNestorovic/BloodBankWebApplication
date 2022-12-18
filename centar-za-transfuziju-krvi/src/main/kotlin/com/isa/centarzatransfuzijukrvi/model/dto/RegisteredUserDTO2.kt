@@ -6,7 +6,8 @@ data class RegisteredUserDTO2(
     var id: Int,
     var email: String,
     var password: String,
-    var role: String?
+    var role: String?,
+    var enable: Boolean?
 ) {
-    constructor(user: RegisteredUser) : this(user.id, user.email, user.password, user.role)
+    constructor(user: RegisteredUser) : this(user.id, user.email, user.password, user.role, user.enable)
 }
