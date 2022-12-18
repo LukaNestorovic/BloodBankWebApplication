@@ -1,5 +1,6 @@
 package com.isa.centarzatransfuzijukrvi.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -36,4 +37,8 @@ data class Staff(
     val complaints: List<Complaint>?,
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val appointments: List<Appointment>?,
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="center_id", referencedColumnName = "id")
+    val center: Center
 )

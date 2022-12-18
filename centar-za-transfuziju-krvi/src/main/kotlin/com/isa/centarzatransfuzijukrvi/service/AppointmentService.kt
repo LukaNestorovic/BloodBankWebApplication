@@ -6,10 +6,12 @@ import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentAdminDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentDTO
 import com.isa.centarzatransfuzijukrvi.model.dto.AppointmentFullDTO
 import com.isa.centarzatransfuzijukrvi.model.Center
+import com.isa.centarzatransfuzijukrvi.model.Staff
 import com.isa.centarzatransfuzijukrvi.model.dto.*
 import com.isa.centarzatransfuzijukrvi.repository.AppointmentRepository
 import com.isa.centarzatransfuzijukrvi.repository.CenterRepository
 import com.isa.centarzatransfuzijukrvi.repository.RegisteredUserRepository
+import com.isa.centarzatransfuzijukrvi.repository.StaffRepository
 import org.hibernate.type.PrimitiveCharacterArrayNClobType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -21,20 +23,24 @@ import java.util.Date
 
 @Service
 class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository,
-                         @Autowired val userRepository: RegisteredUserRepository, @Autowired val emailService: EmailService) {
+                         @Autowired val userRepository: RegisteredUserRepository, @Autowired val emailService: EmailService,@Autowired val staffRepository: StaffRepository) {
     fun create(toSchedule: AppointmentAdminDTO) : Appointment?{
-        val center = centerRepository.findByName(toSchedule.centerName).get()
-        val endDate = Date(toSchedule.date.time+1000*60*60)
+        try{
+            val staff: Staff = staffRepository.findOneByEmail(toSchedule.email)
+            val center = centerRepository.findByName(toSchedule.centerName).get()
+            val endDate = Date(toSchedule.date.time+1000*60*60)
+            val overlap = this.findOverlappingAppointments(toSchedule.date,endDate,toSchedule.centerName)
+            if(overlap!=null)
+                return null;
 
-//        println("START:" + toSchedule.date::class.simpleName + " " + toSchedule.date)
-//        println("END:" + endDate::class.simpleName + " " + endDate)
-
-        val overlap = this.findOverlappingAppointments(toSchedule.date,endDate,toSchedule.centerName)
-        if(overlap!=null) {
-            return null;
+            return if(centerRepository.findByName(toSchedule.centerName).get() == staff.center && staff.role == "Doctor"){
+                appointmentRepository.save(Appointment(time = toSchedule.date, center = center, doctor = staff, donor = null,))
+            }else{
+                appointmentRepository.save(Appointment(time = toSchedule.date, center = center, doctor = null, donor = null,))
+            }
+        }catch (e: Exception){
+            return Appointment(-1,Date(),null,null,null);
         }
-        val appointment = Appointment(time = toSchedule.date, center = center, doctor = null, donor = null,)
-        return appointmentRepository.save(appointment)
     }
     fun findOverlappingAppointments(start: Date, end: Date, centerName: String): Appointment?{
         val allAppointments = appointmentRepository.findAll()
@@ -49,16 +55,18 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         return null;
     }
 
-    fun findAll() : List<AppointmentFullDTO>? {
+    fun findAll(email: String) : List<AppointmentFullDTO>? {
         var retVal: ArrayList<AppointmentFullDTO> = ArrayList()
         for(app in appointmentRepository.findAll()){
-            println("FOUND 1")
-            retVal.add(AppointmentFullDTO(app.time,Date(
-                app.time.time+1000*60*60),
-                (app.donor?.name ?: "Empty") + " " +
-                     (app.donor?.surname ?: "term") + "@" +
-                      (app.center?.name ?: "ERR"),
-                resource = app.center!!.name))
+            //println("MAIL:" + app.doctor?.email + " " + email)
+            if(app.doctor?.email.equals(email)){
+                retVal.add(AppointmentFullDTO(app.time,Date(
+                    app.time.time+1000*60*60),
+                    (app.donor?.name ?: "Empty") + " " +
+                            (app.donor?.surname ?: "term") + "@" +
+                            (app.center?.name ?: "ERR"),
+                    resource = app.center!!.name))
+            }
         }
         return retVal
     }
@@ -146,17 +154,38 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
     }
 
     fun enrollAppointment(enroll: AppointmentEnrollDTO) : Appointment{
-        val df: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        val user = userRepository.findOneByEmail(enroll.email)
-        println("APP ID:" + enroll.appId)
-        val appId = Integer.parseInt(enroll.appId)
-        if(appId!=-1){
-            var appointment = appointmentRepository.findById(appId).get()
-            appointment.donor = user
-            emailService.sendEmail("Reservation","Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date, user.email)
-            return appointmentRepository.save(appointment)
+        try{
+            val user = userRepository.findOneByEmail(enroll.email)
+            val df: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+//            println("APP ID:" + enroll.appId)
+            val appId = Integer.parseInt(enroll.appId)
+            if (appId != -1) {
+                var appointment = appointmentRepository.findById(appId).get()
+                appointment.donor = user
+                emailService.sendEmail(
+                    "Reservation",
+                    "Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date,
+                    user.email
+                )
+                return appointmentRepository.save(appointment)
+            }
+            emailService.sendEmail(
+                "Reservation",
+                "Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date,
+                user.email
+            )
+            return appointmentRepository.save(
+                Appointment(
+                    null,
+                    df.parse(enroll.date),
+                    user,
+                    centerRepository.findByName(enroll.center).get(),
+                    null
+                )
+            )
         }
-        emailService.sendEmail("Reservation","Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date, user.email)
-        return appointmentRepository.save(Appointment(null,df.parse(enroll.date),user,centerRepository.findByName(enroll.center).get(),null))
+        catch(e: Exception){
+            return Appointment(-1,Date(),null,null,null);
+        }
     }
 }

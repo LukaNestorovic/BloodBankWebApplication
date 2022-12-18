@@ -18,6 +18,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 
+
 @RestController
 @RequestMapping(path = ["api"])
 @CrossOrigin(origins=["*"])
@@ -26,11 +27,20 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     @PostMapping(path=["appointment/admin"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createAdmin(@RequestBody unscheduledAppointment : AppointmentAdminDTO) : ResponseEntity<Appointment>{
         //println("REQUEST:" + unscheduledAppointment.centerName.toString() + " DATE:" + unscheduledAppointment.date.toString())
-        return ResponseEntity(appointmentService.create(unscheduledAppointment),HttpStatus.CREATED)
+        val app = appointmentService.create(unscheduledAppointment)
+        if(app!=null){
+            if(app.id==-1){
+                return ResponseEntity(app,HttpStatus.FORBIDDEN)
+            }
+            return ResponseEntity(app,HttpStatus.CREATED)
+        }
+        return return ResponseEntity(null,HttpStatus.NOT_ACCEPTABLE)
     }
 
-    @GetMapping(path=["appointment/admin"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getAllAdmin(): ResponseEntity<List<AppointmentFullDTO>?> = ResponseEntity(appointmentService.findAll(),HttpStatus.OK)
+    @PutMapping(path=["appointment/admin"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getAllAdmin(@RequestBody staff: AppointmentGetForStaffDTO): ResponseEntity<List<AppointmentFullDTO>?>{
+        return ResponseEntity(appointmentService.findAll(staff.email),HttpStatus.OK)
+    }
 
 
     @GetMapping(path = ["/appointments/{enable}/{role}"], produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -102,7 +112,9 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
     }
     @PutMapping(path=["appointment/user"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun enrollAppointment(@RequestBody enroll : AppointmentEnrollDTO) : ResponseEntity<Appointment>{
-        return ResponseEntity(appointmentService.enrollAppointment(enroll),HttpStatus.CREATED)
-
+        val app = appointmentService.enrollAppointment(enroll)
+        if(app.id==-1)
+            return ResponseEntity(null,HttpStatus.FORBIDDEN)
+        return ResponseEntity(app,HttpStatus.CREATED)
     }
 }
