@@ -4,16 +4,14 @@ import com.google.zxing.WriterException
 import com.isa.centarzatransfuzijukrvi.model.QRCodeGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.io.IOException
 import java.util.*
 
 
 @RestController
 @RequestMapping(path = ["api"])
+@CrossOrigin(origins=["*"])
 class QRController(@Autowired var qrCodeGenerator: QRCodeGenerator) {
     private val QR_CODE_IMAGE_PATH = "C:\\Users\\Ryzen\\Desktop\\FAX\\ISA\\ISA-Projekat\\centar-za-transfuziju-krvi\\src\\main\\resources\\static\\QRCode.png"
 
