@@ -79,13 +79,12 @@ export default function LogIn() {
                 localStorage.setItem("role", response.data.role)
                 localStorage.setItem("enable", response.data.enable)
                 if(localStorage.getItem("role") == "user")
-                    navigate("/donorform");
+                    navigate("/home");
                 else navigate("/global-centers")
             })
             .catch((error) => {
                 console.log(error);
                 alert("Wrong email or password");
-
             });
     };
 

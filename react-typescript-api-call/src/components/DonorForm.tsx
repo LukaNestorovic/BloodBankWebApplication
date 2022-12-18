@@ -113,11 +113,13 @@ export default function DonorForm() {
             setDonorForm({...donorForm, [e.target.name]: value});
         };
 
+
         const saveDonorForm = (e: any) => {
             e.preventDefault();
             DonorFormService.saveDonorForm(donorForm)
                 .then((response) => {
                     console.log(response);
+                    navigate("/home")
                 })
                 .catch((error) => {
                     console.log(error);
