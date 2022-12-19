@@ -1,14 +1,23 @@
 import * as React                 from 'react';
 import {Button, Container, Stack} from "@mui/material";
 import {useNavigate}              from "react-router-dom";
+import {useEffect}                from "react";
 
 export default function Home() {
     const navigate = useNavigate()
+    const role = localStorage.getItem("role")
+    const enable = localStorage.getItem("enable")
     const logout = (e:any) => {
         e.preventDefault();
         localStorage.clear()
         navigate("/")
     };
+    useEffect(() => {
+        if(role != "user" || enable != "true") {
+            console.error("Access denied")
+            navigate("/")
+        }
+    },[])
     return(
       <Container>
           <Stack direction="column" spacing={1}>
