@@ -101,7 +101,7 @@ export default function AddAppointmentStaff() {
                         allDay: false,
                         title: element.title,
                         start: new Date(element.start),
-                        end: new Date(element.start),
+                        end: new Date(element.end),
                         resource: element.resource,
                     })
                 })
