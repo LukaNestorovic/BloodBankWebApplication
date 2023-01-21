@@ -162,14 +162,14 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             if (appId != -1) {
                 var appointment = appointmentRepository.findById(appId).get()
                 appointment.donor = user
-                emailService.sendEmail(
+                emailService.sendEmailEnrollQR(
                     "Reservation",
                     "Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date,
                     user.email
                 )
                 return appointmentRepository.save(appointment)
             }
-            emailService.sendEmail(
+            emailService.sendEmailEnrollQR(
                 "Reservation",
                 "Successful reservation, " + user.name + " " + user.name + " at " + enroll.center + " " + enroll.date,
                 user.email
