@@ -19,6 +19,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Date
 
 @Service
@@ -96,13 +98,30 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
 
     fun findAppointmentsOfPatient(user: RegisteredUser) : List<AppointmentDTO> {
         var termini: ArrayList<AppointmentDTO> = ArrayList()
+        var trenutno = LocalDate.now()
         for(app in appointmentRepository.findAll()){
             if(app.donor == user) {
-                termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
+                var vreme = app.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if(trenutno < vreme)
+                    termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
             }
         }
         return termini
     }
+
+    fun findPastAppointmentsOfPatient(user: RegisteredUser) : List<AppointmentDTO> {
+        var termini: ArrayList<AppointmentDTO> = ArrayList()
+        var trenutno = LocalDate.now()
+        for(app in appointmentRepository.findAll()){
+            if(app.donor == user) {
+                var vreme = app.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if(trenutno > vreme)
+                    termini.add(AppointmentDTO(app.id, app.doctor?.name, app.center?.name, app.time.toString()))
+            }
+        }
+        return termini
+    }
+
     fun findCentersFreeAtTime(query: AppointmentSearchUserDTO): List<AppointmentCenterUserDTO>{
         var retVal: ArrayList<AppointmentCenterUserDTO> = ArrayList()
         val apps = appointmentRepository.findAll()

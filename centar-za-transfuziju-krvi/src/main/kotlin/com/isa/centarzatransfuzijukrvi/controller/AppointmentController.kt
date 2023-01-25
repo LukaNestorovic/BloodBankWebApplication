@@ -84,6 +84,15 @@ class AppointmentController(@Autowired val appointmentService: AppointmentServic
         else return ResponseEntity(null, HttpStatus.UNAUTHORIZED)
     }
 
+    @GetMapping(path = ["/pastappointment/{email}/{role}/{enable}"],produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getPastAppointmentsOfPatient(@PathVariable("email") email: String, @PathVariable("role") role: String, @PathVariable("enable") enable: String): ResponseEntity<List<AppointmentDTO>> {
+        if(role == "user" && enable == "true") {
+            var pacijent = registeredUserService.findByEmail(email)
+            return ResponseEntity(appointmentService.findPastAppointmentsOfPatient(pacijent), HttpStatus.OK)
+        }
+        else return ResponseEntity(null, HttpStatus.UNAUTHORIZED)
+    }
+
     @PutMapping(path = ["/deleteappointment"], consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun deleteAppointment(@RequestBody dto: UpdateDTO) : ResponseEntity<Appointment> {
         var lista : ArrayList<Appointment> = ArrayList()

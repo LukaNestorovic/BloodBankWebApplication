@@ -53,7 +53,9 @@ data class RegisteredUser(
     @OneToMany(mappedBy = "donor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val appointments: List<Appointment>?,
     @Column
-    var enable: Boolean?
+    var enable: Boolean?,
+    @Column
+    var penalty: Int
 ) {
     fun updateUserFields(newData: RegisteredUserDto){
         if(newData.name!=null) this.name = newData.name

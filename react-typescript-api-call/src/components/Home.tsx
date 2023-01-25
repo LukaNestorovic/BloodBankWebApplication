@@ -7,6 +7,7 @@ export default function Home() {
     const navigate = useNavigate()
     const role = localStorage.getItem("role")
     const enable = localStorage.getItem("enable")
+    const penalty = localStorage.getItem("penalty")
     const logout = (e:any) => {
         e.preventDefault();
         localStorage.clear()
@@ -26,7 +27,10 @@ export default function Home() {
               <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/centers")}>Centers</Button>
               <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/appointments")}>Appointments</Button>
               <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/scheduledappointments")}>Scheduled appointments</Button>
-              
+              <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/pastappointments")}>Past appointments</Button>
+              <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => navigate("/profile")}>Profile</Button>
+              <Button variant="contained" style={{width:200, alignSelf:'center'}} onClick={() => alert("Imate " + penalty + " penala")}>Penalty</Button>
+
               <Button variant="contained" style={{width:200, alignSelf:'center', background:'red'}} onClick={logout}>Log out</Button>
           </Stack>
       </Container>

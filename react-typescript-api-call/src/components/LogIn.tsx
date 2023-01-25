@@ -78,6 +78,7 @@ export default function LogIn() {
                 localStorage.setItem("email", response.data.email);
                 localStorage.setItem("role", response.data.role)
                 localStorage.setItem("enable", response.data.enable)
+                localStorage.setItem("penalty", response.data.penalty)
                 if(localStorage.getItem("role") == "user")
                     navigate("/home");
                 else navigate("/global-centers")

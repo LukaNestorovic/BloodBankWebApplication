@@ -19,6 +19,9 @@ class AppointmentService {
     findScheduledAppointment(data: any, role:any, enable:any) {
         return axios.get(API_BASE_URL + "scheduledappointment/" + data + "/" + role + "/" + enable)
     }
+    findPastAppointment(data: any, role:any, enable:any) {
+        return axios.get(API_BASE_URL + "pastappointment/" + data + "/" + role + "/" + enable)
+    }
     deleteAppointment(data: any) {
         return axios.put(API_BASE_URL + "deleteappointment", data)
     }

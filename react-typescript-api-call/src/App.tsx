@@ -13,6 +13,7 @@ import DeleteAppointments               from "./components/DeleteAppointments";
 import Success                          from "./components/Success";
 import SearchAppointmentsUser           from './components/SearchAppointmentsUser';
 import Home                             from "./components/Home";
+import PastAppointments                 from "./components/PastAppointments";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/appointment/user" element={<SearchAppointmentsUser />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/pastappointments" element={<PastAppointments />} />
         </Routes>
       </BrowserRouter>
     </>
