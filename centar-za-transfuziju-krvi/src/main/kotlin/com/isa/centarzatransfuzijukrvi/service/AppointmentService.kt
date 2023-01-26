@@ -131,7 +131,8 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         val apps = appointmentRepository.findAll()
         for(app in apps){
             if(app.donor!=null){
-                if(app.donor!!.email.equals(query.email) && Date(app.time.time+1000*60*60*24*60)>query.date){
+                if(app.donor!!.email.equals(query.email) &&
+                    ((Date(app.time.time+15778800000)>=query.date && query.date>=Date(app.time.time)) || (Date(app.time.time-15778800000)<=query.date && query.date<=Date(app.time.time)))){
                     retVal.add(AppointmentCenterUserDTO("NOTAVA","NOTAVA","NOTAVA","NOTAVA",-1,-1.0))
                     return retVal
                 }
