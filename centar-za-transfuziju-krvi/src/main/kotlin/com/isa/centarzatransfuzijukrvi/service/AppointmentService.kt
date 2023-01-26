@@ -15,6 +15,9 @@ import com.isa.centarzatransfuzijukrvi.repository.StaffRepository
 import org.hibernate.type.PrimitiveCharacterArrayNClobType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Isolation
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 import kotlin.collections.ArrayList
 import java.text.DateFormat
@@ -24,6 +27,7 @@ import java.util.Date
 @Service
 class AppointmentService(@Autowired val appointmentRepository: AppointmentRepository, @Autowired val centerRepository: CenterRepository,
                          @Autowired val userRepository: RegisteredUserRepository, @Autowired val emailService: EmailService,@Autowired val staffRepository: StaffRepository) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     fun create(toSchedule: AppointmentAdminDTO) : Appointment?{
         try{
             val staff: Staff = staffRepository.findOneByEmail(toSchedule.email)
@@ -33,7 +37,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
             if(overlap!=null)
                 return null;
 
-            return if(centerRepository.findByName(toSchedule.centerName).get() == staff.center && staff.role == "Doctor"){
+            return if(center == staff.center && staff.role == "Doctor"){
                 appointmentRepository.save(Appointment(time = toSchedule.date, center = center, doctor = staff, donor = null,))
             }else{
                 appointmentRepository.save(Appointment(time = toSchedule.date, center = center, doctor = null, donor = null,))
