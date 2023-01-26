@@ -18,5 +18,5 @@ insert into appointment(id,time,center_id,doctor_id,user_id) values (2,"2022-12-
 insert into appointment(id,time,center_id,doctor_id,user_id) values (3,"2022-12-20 11:00:00",2,1,null)
 insert into appointment(id,time,center_id,doctor_id,user_id) values (6,"2023-12-20 11:00:00",2,1,null)
 insert into appointment(id,time,center_id,doctor_id,user_id) values (4,"2023-12-20 11:11:00",3,null,null);
-insert into appointment(id,time,center_id,doctor_id,user_id) values (5,"2023-12-20 13:00:00",3,null,null);
+insert into appointment(id,time,center_id,doctor_id,user_id) values (5,"2023-12-20 13:00:00",3,1,null);
 

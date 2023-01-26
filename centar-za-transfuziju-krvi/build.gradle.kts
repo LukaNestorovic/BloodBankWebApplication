@@ -25,6 +25,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
+	implementation("org.junit.vintage:junit-vintage-engine")
 	implementation("com.google.zxing:core:3.5.1")
 	implementation("com.google.zxing:javase:3.5.1")
 	runtimeOnly("org.mariadb.jdbc:mariadb-java-client")

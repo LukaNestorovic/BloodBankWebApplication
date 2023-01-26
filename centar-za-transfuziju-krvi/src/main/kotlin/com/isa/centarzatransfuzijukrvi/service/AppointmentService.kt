@@ -87,7 +87,7 @@ class AppointmentService(@Autowired val appointmentRepository: AppointmentReposi
         }
         return termini
     }
-
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     fun updateAppointment(id: Int, pacijent: RegisteredUser) : Appointment {
         val termin = appointmentRepository.findById(id)
         termin.get().updateAppointment(pacijent)
